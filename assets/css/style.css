@@ -115,13 +115,15 @@
     color: #c59d5f;
 }
 body {
-    font-family: 'Open Sans', Arial, sans-serif;
+    font-family: 'Open Sans', 'Cormorant Garamond', Arial, sans-serif;
     background: #f7f4ee;
     color: #2d2d2d;
     margin: 0;
     padding: 0;
     font-size: 1.08rem;
     line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 .container {
     max-width: 1200px;
@@ -420,13 +422,15 @@ footer {
 html {
     scroll-behavior: smooth;
 }
-body {
-    font-family: 'Open Sans', sans-serif;
+/* Dark theme support (future-proof, not active by default) */
+.dark-theme body {
+    font-family: 'Open Sans', 'Cormorant Garamond', Arial, sans-serif;
     font-weight: 400;
     background-color: #0f0f0f;
     color: #e0ddd2;
     line-height: 1.8;
     overflow-x: hidden;
+}
 }
 img {
     max-width: 100%;
