@@ -8,16 +8,22 @@ include __DIR__ . '/includes/header.php';
             <h1 class="section-heading">Gallery</h1>
             <div class="gallery-grid">
                 <div class="gallery-item">
-                    <img src="assets/images/logo_black.png" alt="Gallery Image 1">
+                    <img src="assets/images/making-pasts-bw.jpg" alt="Making Pasta">
                 </div>
                 <div class="gallery-item">
-                    <img src="assets/images/delivery-icon.png" alt="Gallery Image 2">
+                    <img src="assets/images/st-kilda-venue.jpg" alt="St Kilda Venue">
                 </div>
                 <div class="gallery-item">
-                    <img src="assets/images/gift-voucher-icon.png" alt="Gallery Image 3">
+                    <img src="assets/images/hawthorn-venue.jpg" alt="Hawthorn Venue">
                 </div>
                 <div class="gallery-item">
-                    <img src="assets/images/dummy.png" alt="Gallery Image 4">
+                    <img src="assets/images/mordialloc-venue.jpg" alt="Mordialloc Venue">
+                </div>
+                <div class="gallery-item">
+                    <img src="assets/images/wood-fire.jpg" alt="Wood Fire Oven">
+                </div>
+                <div class="gallery-item">
+                    <img src="assets/images/newletter-background.jpg" alt="Newsletter Background">
                 </div>
             </div>
         </div>
