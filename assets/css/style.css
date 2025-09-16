@@ -1,3 +1,46 @@
+/* Contact Page Section */
+.contact-section {
+    background: linear-gradient(to bottom, #1a1a1a, #0f0f0f);
+    padding: 6rem 0;
+}
+.contact-grid {
+    display: flex;
+    gap: 3rem;
+    flex-wrap: wrap;
+    max-width: 900px;
+    margin: 0 auto;
+    align-items: flex-start;
+}
+.contact-details {
+    flex: 1 1 260px;
+    min-width: 260px;
+    background: rgba(245, 242, 233, 0.03);
+    border: 1px solid rgba(179, 84, 56, 0.1);
+    border-radius: 4px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+.contact-details h3 {
+    color: #d4af37;
+    margin-bottom: 1rem;
+}
+.contact-details ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.contact-details ul li {
+    margin-bottom: 0.7rem;
+    color: #b8b5ad;
+}
+.contact-form {
+    flex: 2 1 340px;
+    min-width: 340px;
+    background: rgba(15, 15, 15, 0.5);
+    padding: 2rem;
+    border-radius: 4px;
+    border: 1px solid rgba(179, 84, 56, 0.1);
+}
 /* Menu Page Section */
 .menu-section {
     background: linear-gradient(to bottom, #1a1a1a, #0f0f0f);
