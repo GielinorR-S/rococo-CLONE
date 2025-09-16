@@ -5,7 +5,7 @@ include __DIR__ . '/includes/header.php';
 ?>
 <main>
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero section">
         <div class="hero-content">
             <h1>Simple Italian Food Done Well</h1>
             <p class="hero-subheading">Where rustic Italy and modern Melbourne meet</p>
@@ -16,19 +16,20 @@ include __DIR__ . '/includes/header.php';
         </div>
     </section>
     <!-- Newsletter Signup Section -->
-    <section class="newsletter">
+    <section class="newsletter section">
         <div class="container">
             <h2 class="section-heading">Join Our Newsletter</h2>
+            <div class="section-divider"></div>
             <form action="#" method="POST" class="newsletter-form">
                 <input type="email" name="newsletter_email" placeholder="Enter your email address" required>
                 <button type="submit" class="btn btn-primary">Subscribe</button>
             </form>
             <p class="newsletter-desc">Stay up to date with the latest news, events, and special offers from Rococo.</p>
         </div>
-    </section
+    </section>
 
     <!-- Welcome Section -->
-    <section class="welcome">
+    <section class="welcome section">
         <div class="welcome-image">
             <img src="assets/images/welcome.jpg" alt="Welcome to Rococo">
         </div>
@@ -39,7 +40,8 @@ include __DIR__ . '/includes/header.php';
     </section>
 
     <!-- Menu Preview Section -->
-    <section class="menu-preview">
+    <section class="menu-preview section">
+        <div class="section-divider"></div>
         <div class="container">
             <h2 class="section-heading">Our Menu</h2>
             <div class="menu-grid">
@@ -68,7 +70,8 @@ include __DIR__ . '/includes/header.php';
     </section>
 
     <!-- Functions/Events Section -->
-    <section class="functions">
+    <section class="functions section">
+        <div class="section-divider"></div>
         <div class="functions-content">
             <h2>Private Functions &amp; Events</h2>
             <p>Celebrate your special moments with us. Rococo offers elegant spaces and tailored menus for private events, parties, and corporate gatherings.</p>
@@ -77,7 +80,8 @@ include __DIR__ . '/includes/header.php';
     </section>
 
     <!-- Booking Form Section -->
-    <section id="booking" class="booking">
+    <section id="booking" class="booking section">
+        <div class="section-divider"></div>
         <div class="container">
             <h2 class="section-heading">Book a Table</h2>
             <form action="booking.php" method="POST" class="booking-form">
@@ -117,7 +121,8 @@ include __DIR__ . '/includes/header.php';
     </section>
 
     <!-- Venues/Locations Section -->
-    <section class="venues">
+    <section class="venues section">
+        <div class="section-divider"></div>
         <div class="container">
             <h2 class="section-heading">Our Venues</h2>
             <div class="venue-grid">
