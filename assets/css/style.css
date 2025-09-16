@@ -515,7 +515,7 @@ header {
 /* Hero Section */
 .hero {
     min-height: 100vh;
-    background: linear-gradient(rgba(15, 15, 15, 0.7), rgba(15, 15, 15, 0.7)), url('../images/logo_black.png') no-repeat center center/cover;
+    background: linear-gradient(rgba(15, 15, 15, 0.7), rgba(15, 15, 15, 0.7)), url('../images/making-pasts-bw.jpg') no-repeat center center/cover;
     display: flex;
     align-items: center;
     justify-content: center;
