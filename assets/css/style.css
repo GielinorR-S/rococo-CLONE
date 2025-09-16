@@ -1,3 +1,22 @@
+/* Booking Form Messages */
+.success-message {
+    background: #d4af37;
+    color: #111;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-weight: 600;
+}
+.error-message {
+    background: #b35438;
+    color: #fff;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-weight: 600;
+}
 /* Venues Page Section */
 .venues-section {
     background: linear-gradient(to bottom, #1a1a1a, #0f0f0f);
