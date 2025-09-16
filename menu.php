@@ -29,26 +29,30 @@ $menu = [
 $activeCategory = isset($_GET['category']) ? $_GET['category'] : 'Antipasti';
 ?>
 <main>
-	<section class="menu-section">
-		<div class="container">
-			<h1 class="section-heading">Our Menu</h1>
-			<div class="menu-categories">
-				<?php foreach ($menu as $category => $items): ?>
-					<a href="?category=<?php echo urlencode($category); ?>" class="btn btn-outline<?php echo ($activeCategory == $category) ? ' active' : ''; ?>"><?php echo htmlspecialchars($category); ?></a>
-				<?php endforeach; ?>
-			</div>
-			<div class="menu-items">
-				<?php foreach ($menu[$activeCategory] as $item): ?>
-					<div class="menu-item">
-						<img src="<?php echo $item['img']; ?>" alt="<?php echo htmlspecialchars($item['name']); ?>">
-						<h3><?php echo htmlspecialchars($item['name']); ?></h3>
-						<p><?php echo htmlspecialchars($item['desc']); ?></p>
-						<span class="menu-price"><?php echo htmlspecialchars($item['price']); ?></span>
-					</div>
-				<?php endforeach; ?>
-			</div>
-		</div>
-	</section>
+   <section class="menu-section section">
+	   <div class="container">
+		   <h1 class="section-heading">Our Menu</h1>
+		   <div class="section-divider"></div>
+		   <nav class="menu-categories" aria-label="Menu Categories">
+			   <?php foreach ($menu as $category => $items): ?>
+				   <a href="?category=<?php echo urlencode($category); ?>" class="menu-category<?php echo ($activeCategory == $category) ? ' active' : ''; ?>">
+					   <img src="<?php echo $items[0]['img']; ?>" alt="<?php echo htmlspecialchars($category); ?> icon" />
+					   <h3><?php echo htmlspecialchars($category); ?></h3>
+				   </a>
+			   <?php endforeach; ?>
+		   </nav>
+		   <div class="menu-items">
+			   <?php foreach ($menu[$activeCategory] as $item): ?>
+				   <article class="menu-item">
+					   <img src="<?php echo $item['img']; ?>" alt="<?php echo htmlspecialchars($item['name']); ?> image" />
+					   <div class="menu-item-title"><?php echo htmlspecialchars($item['name']); ?></div>
+					   <div class="menu-item-desc"><?php echo htmlspecialchars($item['desc']); ?></div>
+					   <span class="menu-item-price"><?php echo htmlspecialchars($item['price']); ?></span>
+				   </article>
+			   <?php endforeach; ?>
+		   </div>
+	   </div>
+   </section>
 </main>
 <?php
 include __DIR__ . '/includes/footer.php';
