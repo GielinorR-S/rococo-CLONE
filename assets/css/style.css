@@ -78,20 +78,13 @@
         border-radius: 18px;
         box-shadow: 0 8px 32px rgba(0,0,0,0.06);
         padding: 40px 32px;
-        margin-bottom: 40px;
-        transition: box-shadow 0.2s;
-.venue-detail p {
-    margin-bottom: 1.2rem;
-        box-shadow: 0 16px 48px rgba(0,0,0,0.13);
-    color: #b8b5ad;
-}
 /* Gallery Page Section */
 .gallery-section {
-        width: 120px;
-        height: 5px;
-        background: linear-gradient(90deg, #c59d5f 0%, #b98a3a 100%);
-        border-radius: 3px;
-        margin: 40px auto;
+    background: linear-gradient(to bottom, #1a1a1a, #0f0f0f);
+    padding: 6rem 0;
+}
+.gallery-grid {
+    display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 2rem;
     margin-top: 3rem;
@@ -110,32 +103,6 @@
     object-fit: cover;
     border-radius: 2px;
 }
-/* Booking Form Improvements */
-.booking-form .form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: #d4af37;
-    font-weight: 600;
-}
-.booking-form .form-group input,
-.booking-form .form-group textarea {
-    width: 100%;
-    padding: 0.8rem 1rem;
-    border-radius: 4px;
-    border: 1px solid #b35438;
-    background: #1a1a1a;
-    color: #e0ddd2;
-    font-size: 1rem;
-        background: #d4af37;
-        color: #111;
-        padding: 1rem;
-        border-radius: 4px;
-        margin-bottom: 1.5rem;
-.booking-form .form-btn {
-    text-align: right;
-}
-        padding: 90px 0;
-        background-color: #f7f4ee;
 /* Contact Page Section */
 .contact-section {
     background: linear-gradient(to bottom, #1a1a1a, #0f0f0f);
