@@ -4,31 +4,63 @@
     color: #111;
     padding: 1rem;
     border-radius: 4px;
-    margin-bottom: 1.5rem;
+     background: #fff;
+     border-radius: 18px;
+     box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+     padding: 40px 32px;
         padding: 90px 0;
         background-color: #f7f4ee;
 }
 .error-message {
-        background-color: #f3eee7;
-    color: #fff;
-    padding: 1rem;
-        background-color: #f9f7f2;
-    margin-bottom: 1.5rem;
-    text-align: center;
+}
     font-weight: 600;
+}
+    padding: 90px 0;
+    background-color: #f7f4ee;
 }
         font-family: 'Playfair Display', serif;
         font-weight: 700;
-        color: #2d2d2d;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: #2d2d2d;
+    margin-bottom: 32px;
+    letter-spacing: 1.2px;
+}
+     background: #f9f7f2;
+    font-size: 3.2rem;
+}
         margin-bottom: 32px;
+    font-size: 2.5rem;
+}
         letter-spacing: 1.2px;
+    font-size: 1.7rem;
+}
 .venue-list {
     display: grid;
+    font-size: 1.15rem;
+    color: #5a5a5a;
+    line-height: 1.8;
+    margin-bottom: 24px;
+}
         font-size: 3.2rem;
     gap: 2.5rem;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+    padding: 40px 32px;
+    margin-bottom: 40px;
+    transition: box-shadow 0.2s;
+}
     margin-top: 3rem;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.13);
+}
         font-size: 2.5rem;
 .venue-detail {
+    width: 120px;
+    height: 5px;
+    background: linear-gradient(90deg, #c59d5f 0%, #b98a3a 100%);
+    border-radius: 3px;
+    margin: 40px auto;
     background: rgba(245, 242, 233, 0.03);
         font-size: 1.7rem;
     border-radius: 4px;
