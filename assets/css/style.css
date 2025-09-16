@@ -460,6 +460,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
 }
 .logo a {
     font-family: 'Cormorant Garamond', serif;
@@ -474,6 +475,7 @@ header {
     display: flex;
     list-style: none;
     gap: 2.5rem;
+    flex-wrap: wrap;
 }
 .nav-links li a {
     font-size: 0.9rem;
@@ -505,8 +507,9 @@ header {
     font-size: 0.8rem;
 }
 .hamburger {
-    display: none;
+    display: block;
     cursor: pointer;
+    margin-left: 1.5rem;
 }
 
 /* Hero Section */
@@ -758,30 +761,26 @@ footer {
 }
 
 @media (max-width: 768px) {
-    .navbar {
-        position: relative;
-    }
     .nav-links {
-        position: fixed;
+        position: absolute;
         top: 70px;
-        left: -100%;
+        left: 0;
         width: 100%;
-        height: calc(100vh - 70px);
-        background: #0a0a0a;
+        background: #111;
         flex-direction: column;
-        justify-content: flex-start;
         align-items: center;
-        padding: 3rem 0;
-        gap: 2.5rem;
-        transition: all 0.4s ease;
+        gap: 1.5rem;
+        padding: 2rem 0;
+        display: none;
+        z-index: 1001;
     }
     .nav-links.active {
-        left: 0;
+        display: flex;
     }
     .hamburger {
         display: block;
-        z-index: 1001;
     }
+    /* Removed misplaced left: 0; and duplicate .hamburger block */
     .hero-btns {
         flex-direction: column;
         align-items: center;
