@@ -15,6 +15,17 @@ include __DIR__ . '/includes/header.php';
             </div>
         </div>
     </section>
+    <!-- Newsletter Signup Section -->
+    <section class="newsletter">
+        <div class="container">
+            <h2 class="section-heading">Join Our Newsletter</h2>
+            <form action="#" method="POST" class="newsletter-form">
+                <input type="email" name="newsletter_email" placeholder="Enter your email address" required>
+                <button type="submit" class="btn btn-primary">Subscribe</button>
+            </form>
+            <p class="newsletter-desc">Stay up to date with the latest news, events, and special offers from Rococo.</p>
+        </div>
+    </section
 
     <!-- Welcome Section -->
     <section class="welcome">
