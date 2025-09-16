@@ -803,6 +803,25 @@ footer {
 }
 
 @media (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+    .section-heading {
+        font-size: 1.5rem;
+    }
+    .menu-categories {
+        flex-direction: column;
+        gap: 0.7rem;
+    }
+    .menu-item img,
+    .venue-detail img,
+    .gallery-item img {
+        height: 120px;
+    }
+    .booking-form,
+    .contact-form {
+        padding: 1rem;
+    }
     .booking-form {
         padding: 1.5rem;
     }
