@@ -1,83 +1,51 @@
 /* Booking Form Messages */
-.success-message {
-    background: #d4af37;
-    color: #111;
-    padding: 1rem;
-    border-radius: 4px;
-     background: #fff;
-     border-radius: 18px;
-     box-shadow: 0 8px 32px rgba(0,0,0,0.06);
-     padding: 40px 32px;
-        padding: 90px 0;
-        background-color: #f7f4ee;
+/* Global Styles */
+body {
+    font-family: 'Open Sans', Arial, sans-serif;
+    background: #f7f4ee;
+    color: #2d2d2d;
+    margin: 0;
+    padding: 0;
+    font-size: 1.08rem;
+    line-height: 1.7;
 }
-.error-message {
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
 }
-    font-weight: 600;
-}
+.section {
     padding: 90px 0;
     background-color: #f7f4ee;
 }
-        font-family: 'Playfair Display', serif;
-        font-weight: 700;
-    font-family: 'Playfair Display', serif;
+.section-dark {
+    background-color: #f3eee7;
+}
+.section-light {
+    background-color: #fff;
+}
+.section-heading {
+    font-family: 'Cormorant Garamond', 'Playfair Display', serif;
+    font-size: 2.8rem;
     font-weight: 700;
-    color: #2d2d2d;
+    color: #b98a3a;
     margin-bottom: 32px;
     letter-spacing: 1.2px;
+    text-align: center;
 }
-     background: #f9f7f2;
-    font-size: 3.2rem;
-}
-        margin-bottom: 32px;
-    font-size: 2.5rem;
-}
-        letter-spacing: 1.2px;
-    font-size: 1.7rem;
-}
-.venue-list {
-    display: grid;
-    font-size: 1.15rem;
-    color: #5a5a5a;
-    line-height: 1.8;
-    margin-bottom: 24px;
-}
-        font-size: 3.2rem;
-    gap: 2.5rem;
-    background: #fff;
-    border-radius: 18px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.06);
-    padding: 40px 32px;
-    margin-bottom: 40px;
-    transition: box-shadow 0.2s;
-}
-    margin-top: 3rem;
-    box-shadow: 0 16px 48px rgba(0,0,0,0.13);
-}
-        font-size: 2.5rem;
-.venue-detail {
+.section-divider {
     width: 120px;
     height: 5px;
     background: linear-gradient(90deg, #c59d5f 0%, #b98a3a 100%);
     border-radius: 3px;
     margin: 40px auto;
-    background: rgba(245, 242, 233, 0.03);
-        font-size: 1.7rem;
+}
+.success-message {
+    background: #d4af37;
+    color: #111;
+    padding: 1rem;
     border-radius: 4px;
-    padding: 2rem;
-    text-align: center;
-        font-size: 1.15rem;
-        color: #5a5a5a;
-        line-height: 1.8;
-        margin-bottom: 24px;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 2px;
-    margin-bottom: 1.5rem;
-        background: #fff;
-        border-radius: 18px;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.06);
-        padding: 40px 32px;
+}
 /* Gallery Page Section */
 .gallery-section {
     background: linear-gradient(to bottom, #1a1a1a, #0f0f0f);
@@ -106,64 +74,31 @@
 /* Contact Page Section */
 .contact-section {
     background: linear-gradient(to bottom, #1a1a1a, #0f0f0f);
-        background: #b35438;
-        color: #fff;
-        padding: 1rem;
-        border-radius: 4px;
-        margin-bottom: 1.5rem;
-        text-align: center;
-        font-weight: 600;
     margin: 0 auto;
     align-items: flex-start;
 }
-        background-color: #f3eee7;
 .contact-details {
     flex: 1 1 260px;
-        background-color: #f9f7f2;
     min-width: 260px;
     background: rgba(245, 242, 233, 0.03);
     border: 1px solid rgba(179, 84, 56, 0.1);
-        font-family: 'Playfair Display', serif;
-        font-weight: 700;
-        color: #2d2d2d;
-        margin-bottom: 32px;
-        letter-spacing: 1.2px;
     border-radius: 4px;
     padding: 1.5rem;
-        font-size: 3.2rem;
     margin-bottom: 2rem;
 }
-        font-size: 2.5rem;
 .contact-details h3 {
     color: #d4af37;
-        font-size: 1.7rem;
     margin-bottom: 1rem;
 }
 .contact-details ul {
-        font-size: 1.15rem;
-        color: #5a5a5a;
-        line-height: 1.8;
-        margin-bottom: 24px;
     list-style: none;
     padding: 0;
     margin: 0;
-        background: #fff;
-        border-radius: 18px;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.06);
-        padding: 40px 32px;
-        margin-bottom: 40px;
-        transition: box-shadow 0.2s;
 }
 .contact-details ul li {
-        box-shadow: 0 16px 48px rgba(0,0,0,0.13);
     margin-bottom: 0.7rem;
     color: #b8b5ad;
 }
-        width: 120px;
-        height: 5px;
-        background: linear-gradient(90deg, #c59d5f 0%, #b98a3a 100%);
-        border-radius: 3px;
-        margin: 40px auto;
 .contact-form {
     flex: 2 1 340px;
     min-width: 340px;
