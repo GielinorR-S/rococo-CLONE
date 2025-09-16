@@ -5,24 +5,24 @@ include __DIR__ . '/includes/header.php';
 
 $menu = [
 	'Antipasti' => [
-		['name' => 'Bruschetta', 'desc' => 'Grilled bread topped with fresh tomatoes, garlic, basil, and olive oil.', 'price' => '$12', 'img' => 'assets/images/dummy.png'],
-		['name' => 'Arancini', 'desc' => 'Crispy risotto balls with mozzarella and herbs.', 'price' => '$14', 'img' => 'assets/images/dummy.png'],
+		['name' => 'Bruschetta', 'desc' => 'Grilled bread topped with fresh tomatoes, garlic, basil, and olive oil.', 'price' => '$12', 'img' => 'assets/images/antipasti.jpg'],
+		['name' => 'Arancini', 'desc' => 'Crispy risotto balls with mozzarella and herbs.', 'price' => '$14', 'img' => 'assets/images/antipasti.jpg'],
 	],
 	'Pasta' => [
-		['name' => 'Spaghetti Carbonara', 'desc' => 'Classic Roman pasta with pancetta, egg, pecorino cheese, and black pepper.', 'price' => '$22', 'img' => 'assets/images/dummy.png'],
-		['name' => 'Lasagna', 'desc' => 'Layers of pasta, beef ragu, béchamel, and parmesan.', 'price' => '$24', 'img' => 'assets/images/dummy.png'],
+		['name' => 'Spaghetti Carbonara', 'desc' => 'Classic Roman pasta with pancetta, egg, pecorino cheese, and black pepper.', 'price' => '$22', 'img' => 'assets/images/pasta.jpg'],
+		['name' => 'Lasagna', 'desc' => 'Layers of pasta, beef ragu, béchamel, and parmesan.', 'price' => '$24', 'img' => 'assets/images/pasta.jpg'],
 	],
 	'Pizza' => [
-		['name' => 'Margherita Pizza', 'desc' => 'Wood-fired pizza with tomato, mozzarella, and fresh basil.', 'price' => '$20', 'img' => 'assets/images/dummy.png'],
-		['name' => 'Diavola', 'desc' => 'Spicy salami, tomato, mozzarella, and chili.', 'price' => '$22', 'img' => 'assets/images/dummy.png'],
+		['name' => 'Margherita Pizza', 'desc' => 'Wood-fired pizza with tomato, mozzarella, and fresh basil.', 'price' => '$20', 'img' => 'assets/images/wood-fire.jpg'],
+		['name' => 'Diavola', 'desc' => 'Spicy salami, tomato, mozzarella, and chili.', 'price' => '$22', 'img' => 'assets/images/wood-fire.jpg'],
 	],
 	'Desserts' => [
-		['name' => 'Tiramisu', 'desc' => 'Traditional Italian dessert with coffee-soaked ladyfingers and mascarpone cream.', 'price' => '$10', 'img' => 'assets/images/dummy.png'],
-		['name' => 'Panna Cotta', 'desc' => 'Vanilla bean panna cotta with berry coulis.', 'price' => '$11', 'img' => 'assets/images/dummy.png'],
+		['name' => 'Tiramisu', 'desc' => 'Traditional Italian dessert with coffee-soaked ladyfingers and mascarpone cream.', 'price' => '$10', 'img' => 'assets/images/dessert.jpg'],
+		['name' => 'Panna Cotta', 'desc' => 'Vanilla bean panna cotta with berry coulis.', 'price' => '$11', 'img' => 'assets/images/dessert.jpg'],
 	],
 	'Wine & Bar' => [
-		['name' => 'Chianti', 'desc' => 'Classic Tuscan red wine.', 'price' => '$9/glass', 'img' => 'assets/images/dummy.png'],
-		['name' => 'Negroni', 'desc' => 'Gin, Campari, and sweet vermouth.', 'price' => '$15', 'img' => 'assets/images/dummy.png'],
+		['name' => 'Chianti', 'desc' => 'Classic Tuscan red wine.', 'price' => '$9/glass', 'img' => 'assets/images/wine.jpg'],
+		['name' => 'Negroni', 'desc' => 'Gin, Campari, and sweet vermouth.', 'price' => '$15', 'img' => 'assets/images/wine.jpg'],
 	],
 ];
 
