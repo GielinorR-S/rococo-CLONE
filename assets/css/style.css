@@ -275,7 +275,7 @@ section {
 
 /* Functions Section */
 .functions {
-    background: linear-gradient(rgba(15, 15, 15, 0.9), rgba(15, 15, 15, 0.9)), url('../images/functions-bg.jpg') no-repeat center center/cover;
+    background: linear-gradient(rgba(15, 15, 15, 0.9), rgba(15, 15, 15, 0.9)), url('../images/delivery-icon.png') no-repeat center center/cover;
     text-align: center;
 }
 .functions-content {
