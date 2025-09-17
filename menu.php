@@ -1,59 +1,89 @@
-
 <?php
-$pageTitle = "Rococo | Menu";
-include __DIR__ . '/includes/header.php';
-
-$menu = [
-	'Antipasti' => [
-		['name' => 'Bruschetta', 'desc' => 'Grilled bread topped with fresh tomatoes, garlic, basil, and olive oil.', 'price' => '$12', 'img' => 'assets/images/antipasti.jpg'],
-		['name' => 'Arancini', 'desc' => 'Crispy risotto balls with mozzarella and herbs.', 'price' => '$14', 'img' => 'assets/images/antipasti.jpg'],
-	],
-	'Pasta' => [
-		['name' => 'Spaghetti Carbonara', 'desc' => 'Classic Roman pasta with pancetta, egg, pecorino cheese, and black pepper.', 'price' => '$22', 'img' => 'assets/images/pasta.jpg'],
-		['name' => 'Lasagna', 'desc' => 'Layers of pasta, beef ragu, béchamel, and parmesan.', 'price' => '$24', 'img' => 'assets/images/pasta.jpg'],
-	],
-	'Pizza' => [
-		['name' => 'Margherita Pizza', 'desc' => 'Wood-fired pizza with tomato, mozzarella, and fresh basil.', 'price' => '$20', 'img' => 'assets/images/wood-fire.jpg'],
-		['name' => 'Diavola', 'desc' => 'Spicy salami, tomato, mozzarella, and chili.', 'price' => '$22', 'img' => 'assets/images/wood-fire.jpg'],
-	],
-	'Desserts' => [
-		['name' => 'Tiramisu', 'desc' => 'Traditional Italian dessert with coffee-soaked ladyfingers and mascarpone cream.', 'price' => '$10', 'img' => 'assets/images/dessert.jpg'],
-		['name' => 'Panna Cotta', 'desc' => 'Vanilla bean panna cotta with berry coulis.', 'price' => '$11', 'img' => 'assets/images/dessert.jpg'],
-	],
-	'Wine & Bar' => [
-		['name' => 'Chianti', 'desc' => 'Classic Tuscan red wine.', 'price' => '$9/glass', 'img' => 'assets/images/wine.jpg'],
-		['name' => 'Negroni', 'desc' => 'Gin, Campari, and sweet vermouth.', 'price' => '$15', 'img' => 'assets/images/wine.jpg'],
-	],
-];
-
-$activeCategory = isset($_GET['category']) ? $_GET['category'] : 'Antipasti';
+$pageTitle = "Menu";
+include 'includes/header.php';
 ?>
-<main>
-   <section class="menu-section section">
-	   <div class="container">
-		   <h1 class="section-heading">Our Menu</h1>
-		   <div class="section-divider"></div>
-		   <nav class="menu-categories" aria-label="Menu Categories">
-			   <?php foreach ($menu as $category => $items): ?>
-				   <a href="?category=<?php echo urlencode($category); ?>" class="menu-category<?php echo ($activeCategory == $category) ? ' active' : ''; ?>">
-					   <img src="<?php echo $items[0]['img']; ?>" alt="<?php echo htmlspecialchars($category); ?> icon" />
-					   <h3><?php echo htmlspecialchars($category); ?></h3>
-				   </a>
-			   <?php endforeach; ?>
-		   </nav>
-		   <div class="menu-items">
-			   <?php foreach ($menu[$activeCategory] as $item): ?>
-				   <article class="menu-item">
-					   <img src="<?php echo $item['img']; ?>" alt="<?php echo htmlspecialchars($item['name']); ?> image" />
-					   <div class="menu-item-title"><?php echo htmlspecialchars($item['name']); ?></div>
-					   <div class="menu-item-desc"><?php echo htmlspecialchars($item['desc']); ?></div>
-					   <span class="menu-item-price"><?php echo htmlspecialchars($item['price']); ?></span>
-				   </article>
-			   <?php endforeach; ?>
-		   </div>
-	   </div>
-   </section>
-</main>
-<?php
-include __DIR__ . '/includes/footer.php';
-?>
+
+<section class="menu-hero">
+    <div class="container">
+        <h1>Our Menu</h1>
+        <p>Discover our authentic Italian dishes made with passion</p>
+    </div>
+</section>
+
+<section class="menu-content">
+    <div class="container">
+        <div class="menu-category">
+            <h2>Antipasti</h2>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <div class="menu-item-image-2"></div>
+                    <h3>Bruschetta Classica</h3>
+                    <p>Toasted bread with tomatoes, garlic, and fresh basil</p>
+                    <span class="price">$12</span>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-image-2"></div>
+                    <h3>Antipasto della Casa</h3>
+                    <p>Selection of Italian cured meats, cheeses, and vegetables</p>
+                    <span class="price">$18</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu-category">
+            <h2>Pasta</h2>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <div class="menu-item-image-1"></div>
+                    <h3>Spaghetti Carbonara</h3>
+                    <p>Traditional Roman pasta with eggs, cheese, pancetta, and pepper</p>
+                    <span class="price">$16</span>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-image-1"></div>
+                    <h3>Fettuccine Alfredo</h3>
+                    <p>Fresh fettuccine tossed with Parmesan cream sauce</p>
+                    <span class="price">$17</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu-category">
+            <h2>Main Courses</h2>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <div class="menu-item-image-4"></div>
+                    <h3>Osso Buco</h3>
+                    <p>Braised veal shanks with saffron risotto</p>
+                    <span class="price">$28</span>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-image-4"></div>
+                    <h3>Saltimbocca alla Romana</h3>
+                    <p>Veal with prosciutto and sage in white wine sauce</p>
+                    <span class="price">$26</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu-category">
+            <h2>Desserts</h2>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <div class="menu-item-image-3"></div>
+                    <h3>Tiramisu</h3>
+                    <p>Classic Italian dessert with coffee-soaked ladyfingers</p>
+                    <span class="price">$10</span>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-image-3"></div>
+                    <h3>Panna Cotta</h3>
+                    <p>Silky vanilla custard with berry compote</p>
+                    <span class="price">$9</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<?php include 'includes/footer.php'; ?>
