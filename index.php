@@ -16,23 +16,20 @@ include 'includes/header.php';
         <form class="quick-booking" action="booking.php" method="GET" aria-label="Quick Booking">
             <div class="qb-field">
                 <label for="qb-venue" class="visually-hidden">Restaurant</label>
+                <?php $validVenues = ['st-kilda','hawthorn','point-cook','mordialloc']; ?>
                 <select id="qb-venue" name="venue" required>
                     <option value="" disabled selected>Select Restaurant</option>
-                    <option value="st-kilda">St Kilda</option>
-                    <option value="hawthorn">Hawthorn</option>
-                    <option value="point-cook">Point Cook</option>
-                    <option value="mordialloc">Mordialloc</option>
+                    <?php foreach($validVenues as $v): ?>
+                        <option value="<?php echo $v; ?>"><?php echo ucwords(str_replace('-', ' ', $v)); ?></option>
+                    <?php endforeach; ?>
                 </select>
             </div>
             <div class="qb-field">
                 <label for="qb-guests" class="visually-hidden">Guests</label>
                 <select id="qb-guests" name="guests" required>
-                    <option value="2" selected>2 People</option>
-                    <option value="1">1 Person</option>
-                    <option value="3">3 People</option>
-                    <option value="4">4 People</option>
-                    <option value="5">5 People</option>
-                    <option value="6">6 People</option>
+                    <?php for($g=1;$g<=20;$g++): ?>
+                        <option value="<?php echo $g; ?>" <?php echo $g===2? 'selected':''; ?>><?php echo $g . ($g===1? ' Person':' People'); ?></option>
+                    <?php endfor; ?>
                 </select>
             </div>
             <div class="qb-field">
@@ -41,7 +38,29 @@ include 'includes/header.php';
             </div>
             <div class="qb-field">
                 <label for="qb-time" class="visually-hidden">Time</label>
-                <input type="time" id="qb-time" name="time" required>
+                <select id="qb-time" name="time" required>
+                    <option value="" disabled selected>Select Time</option>
+                    <option value="12:00">12:00 PM</option>
+                    <option value="12:30">12:30 PM</option>
+                    <option value="13:00">1:00 PM</option>
+                    <option value="13:30">1:30 PM</option>
+                    <option value="14:00">2:00 PM</option>
+                    <option value="14:30">2:30 PM</option>
+                    <option value="15:00">3:00 PM</option>
+                    <option value="15:30">3:30 PM</option>
+                    <option value="16:00">4:00 PM</option>
+                    <option value="16:30">4:30 PM</option>
+                    <option value="17:00">5:00 PM</option>
+                    <option value="17:30">5:30 PM</option>
+                    <option value="18:00">6:00 PM</option>
+                    <option value="18:30">6:30 PM</option>
+                    <option value="19:00">7:00 PM</option>
+                    <option value="19:30">7:30 PM</option>
+                    <option value="20:00">8:00 PM</option>
+                    <option value="20:30">8:30 PM</option>
+                    <option value="21:00">9:00 PM</option>
+                    <option value="21:30">9:30 PM</option>
+                </select>
             </div>
             <div class="qb-field qb-submit">
                 <button type="submit" class="qb-button" aria-label="Find a Table">Find a Table</button>
@@ -113,12 +132,37 @@ document.addEventListener('DOMContentLoaded', function() {
     images = document.querySelectorAll('.slider-img');
     sliderImages = document.querySelector('.slider-images');
     showSlide(0);
+
+    // Safeguard: ensure guest select includes value 20 (some users reported only up to 19 visible due to caching)
+    const guestSelect = document.getElementById('qb-guests');
+    if(guestSelect){
+        const has20 = Array.from(guestSelect.options).some(o => o.value === '20');
+        if(!has20){
+            const opt = document.createElement('option');
+            opt.value = '20';
+            opt.textContent = '20 People';
+            guestSelect.appendChild(opt);
+        }
+    }
+
+    // Redirect large parties (11+) to group bookings page instead of normal booking flow
+    const quickForm = document.querySelector('.quick-booking');
+    if(quickForm){
+        quickForm.addEventListener('submit', function(e){
+            const guestsSel = quickForm.querySelector('#qb-guests');
+            const guestsVal = parseInt(guestsSel && guestsSel.value ? guestsSel.value : '0', 10);
+            if(guestsVal > 10){
+                e.preventDefault();
+                window.location.href = 'group-bookings.php?guests=' + guestsVal + (quickForm.qb_date ? '&date='+ encodeURIComponent(quickForm.qb_date.value):'');
+            }
+        });
+    }
 });
 </script>
 
 <!-- Venues Section -->
-<section class="venues-preview" id="venues">
-    <div class="container">
+<section class="venues-preview page-band" id="venues">
+    <div class="band-inner">
         <h2 class="section-title">Our Venues</h2>
         <div class="venues-grid">
             <article class="venue-card">
@@ -158,54 +202,64 @@ document.addEventListener('DOMContentLoaded', function() {
 </section>
 
 <!-- Delivery & Gift Section (refined layout) -->
-<section class="services-split" id="services">
-    <div class="container services-grid">
+<section class="services-split page-band" id="services">
+    <div class="band-inner services-grid">
         <article class="service-block take-away">
-            <div class="service-media" aria-hidden="true"></div>
+            <div class="service-media" aria-hidden="true">
+                <img src="assets/images/delivery-icon.png" srcset="assets/images/delivery-icon@2x.png 2x" alt="Delivery icon" class="service-icon" loading="lazy" width="300" height="120">
+            </div>
             <div class="service-inner">
                 <h2>Delivery &amp; Takeaway</h2>
                 <p>Enjoy our signature dishes at home. Freshly prepared, carefully packed, and delivered with care.</p>
-                <a href="#" class="btn alt-btn" aria-label="Order Online">Order Online</a>
+                <a href="delivery-takeaway.php" class="btn alt-btn" aria-label="Order Delivery or Takeaway">Order Online</a>
             </div>
         </article>
         <article class="service-block gift-voucher">
-            <div class="service-media" aria-hidden="true"></div>
+            <div class="service-media" aria-hidden="true">
+                <img src="assets/images/gift-voucher-icon.png" srcset="assets/images/gift-voucher-icon@2x.png 2x" alt="Gift voucher icon" class="service-icon" loading="lazy" width="300" height="120">
+            </div>
             <div class="service-inner">
                 <h2>Gift Vouchers</h2>
                 <p>Share the experience. Digital and physical vouchers perfect for any celebration.</p>
-                <a href="#" class="btn alt-btn" aria-label="Buy Gift Voucher">Buy a Voucher</a>
+                <a href="gift-vouchers.php" class="btn alt-btn" aria-label="Buy Gift Voucher">Buy a Voucher</a>
             </div>
         </article>
     </div>
 </section>
 
 <!-- Staggered Quote / Image Columns -->
-<section class="story-stripe">
-    <div class="container stripe-grid">
-        <!-- Row 1: left card, right photo -->
-        <div class="stripe-item quote">
-            <blockquote>
-                <p>“Food is a celebration – we just set the stage for your memories.”</p>
-                <cite>&mdash; Head Chef</cite>
-            </blockquote>
+<section class="story-stripe page-band">
+    <div class="band-inner stripe-grid alternating">
+        <!-- Row 1: Photo | Chef Card -->
+        <div class="stripe-row">
+            <div class="stripe-item photo" style="background-image:url('https://images.unsplash.com/photo-1520201163981-8cc95007dd2a?auto=format&fit=crop&w=1000&q=70');" aria-label="Dining Room"></div>
+            <div class="stripe-item quote">
+                <blockquote>
+                    <p>“Food is a celebration – we just set the stage for your memories.”</p>
+                    <cite>&mdash; Head Chef</cite>
+                </blockquote>
+            </div>
         </div>
-        <div class="stripe-item photo" style="background-image:url('https://images.unsplash.com/photo-1520201163981-8cc95007dd2a?auto=format&fit=crop&w=1000&q=70');" aria-label="Dining Room"></div>
-        <!-- Row 2: left photo, right card -->
-    <div class="stripe-item photo" style="background-image:url('https://images.unsplash.com/photo-1516100882582-96c3a05fe590?auto=format&fit=crop&w=1200&q=70');" aria-label="Bowl of Pasta"></div>
-        <div class="stripe-item quote alt">
-            <blockquote>
-                <p>“From morning espresso to late-night Negroni – always welcome.”</p>
-                <cite>&mdash; Venue Manager</cite>
-            </blockquote>
+        <!-- Row 2: Founder Card | Photo -->
+        <div class="stripe-row">
+            <div class="stripe-item quote alt">
+                <blockquote>
+                    <p>“Italian dining is about connection – the table is our heart.”</p>
+                    <cite>&mdash; Founder</cite>
+                </blockquote>
+            </div>
+            <div class="stripe-item photo" style="background-image:url('https://images.unsplash.com/photo-1516100882582-96c3a05fe590?auto=format&fit=crop&w=1200&q=70');" aria-label="Bowl of Pasta"></div>
         </div>
-        <!-- Row 3: left card, right photo -->
-        <div class="stripe-item quote">
-            <blockquote>
-                <p>“Italian dining is about connection – the table is our heart.”</p>
-                <cite>&mdash; Founder</cite>
-            </blockquote>
+        <!-- Row 3: Photo | Venue Manager Card -->
+        <div class="stripe-row">
+            <div class="stripe-item photo" style="background-image:url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=70');" aria-label="Bar Area"></div>
+            <div class="stripe-item quote">
+                <blockquote>
+                    <p>“From morning espresso to late-night Negroni – always welcome.”</p>
+                    <cite>&mdash; Venue Manager</cite>
+                </blockquote>
+            </div>
         </div>
-        <div class="stripe-item photo" style="background-image:url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=70');" aria-label="Bar Area"></div>
     </div>
 </section>
 

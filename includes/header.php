@@ -39,10 +39,32 @@ session_start(); // Start a session for user messages
                     <button class="close-btn" id="close-menu" style="display:none;">&times;</button>
                     <ul>
                         <li><a href="index.php" class="<?php if (basename($_SERVER['PHP_SELF']) == 'index.php') echo 'active'; ?>">Home</a></li>
-                        <li><a href="menu.php" class="<?php if (basename($_SERVER['PHP_SELF']) == 'menu.php') echo 'active'; ?>">Menu</a></li>
-                        <li><a href="functions.php" class="<?php if (basename($_SERVER['PHP_SELF']) == 'functions.php') echo 'active'; ?>">Functions</a></li>
-                        <li><a href="our-story.php" class="<?php if (basename($_SERVER['PHP_SELF']) == 'our-story.php') echo 'active'; ?>">Our Story</a></li>
-                        <li><a href="contact.php" class="<?php if (basename($_SERVER['PHP_SELF']) == 'contact.php') echo 'active'; ?>">Contact</a></li>
+                        <li><a href="booking.php" class="<?php if (basename($_SERVER['PHP_SELF']) == 'booking.php') echo 'active'; ?>">Book Now</a></li>
+                        <li class="has-sub <?php if (basename($_SERVER['PHP_SELF']) == 'delivery-takeaway.php') echo 'current-parent'; ?>">
+                            <a href="delivery-takeaway.php" class="nav-parent <?php if (basename($_SERVER['PHP_SELF']) == 'delivery-takeaway.php') echo 'active'; ?>" aria-expanded="false">Delivery &amp; Takeaway</a>
+                            <div class="sub-menu-wrapper" aria-hidden="true">
+                                <ul class="sub-menu" aria-label="Delivery venues">
+                                    <li><a href="booking.php?venue=St+Kilda">St Kilda</a></li>
+                                    <li><a href="booking.php?venue=Hawthorn">Hawthorn</a></li>
+                                    <li><a href="booking.php?venue=Point+Cook">Point Cook</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="has-sub <?php if (basename($_SERVER['PHP_SELF']) == 'locations-menus.php') echo 'current-parent'; ?>">
+                            <a href="locations-menus.php" class="nav-parent <?php if (basename($_SERVER['PHP_SELF']) == 'locations-menus.php') echo 'active'; ?>" aria-expanded="false">Locations &amp; Menus</a>
+                            <div class="sub-menu-wrapper" aria-hidden="true">
+                                <ul class="sub-menu" aria-label="Locations list">
+                                    <li><a href="locations-menus.php#loc-stk">St Kilda</a></li>
+                                    <li><a href="locations-menus.php#loc-haw">Hawthorn</a></li>
+                                    <li><a href="locations-menus.php#loc-pc">Point Cook</a></li>
+                                    <li><a href="locations-menus.php#loc-mod">Mordialloc</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li><a href="group-bookings.php" class="<?php if (basename($_SERVER['PHP_SELF']) == 'group-bookings.php') echo 'active'; ?>">Group Bookings (10+)</a></li>
+                        <li><a href="gift-vouchers.php" class="<?php if (basename($_SERVER['PHP_SELF']) == 'gift-vouchers.php') echo 'active'; ?>">Gift Vouchers</a></li>
+                        <li><a href="employment.php" class="<?php if (basename($_SERVER['PHP_SELF']) == 'employment.php') echo 'active'; ?>">Employment</a></li>
+                        <li><a href="contact.php" class="<?php if (basename($_SERVER['PHP_SELF']) == 'contact.php') echo 'active'; ?>">Contact Us</a></li>
                     </ul>
                 </div>
             </nav>
@@ -89,6 +111,55 @@ window.addEventListener('scroll', function() {
     else header.classList.remove('scrolled');
 });
 */
+</script>
+<script>
+// Submenu toggle logic (first click expands, second click navigates)
+document.addEventListener('DOMContentLoaded', function() {
+    const menu = document.getElementById('popup-menu');
+    if(!menu) return;
+    const parentLinks = menu.querySelectorAll('.has-sub > a.nav-parent');
+
+    function closeAll(except){
+        menu.querySelectorAll('.has-sub.open').forEach(li => {
+            if(li === except) return;
+            li.classList.remove('open');
+            const wrap = li.querySelector('.sub-menu-wrapper');
+            const trigger = li.querySelector('a.nav-parent');
+            if(wrap){ wrap.style.maxHeight = null; wrap.setAttribute('aria-hidden','true'); }
+            if(trigger){ trigger.setAttribute('aria-expanded','false'); }
+        });
+    }
+
+    parentLinks.forEach(link => {
+        link.addEventListener('click', function(e){
+            const li = link.parentElement;
+            const open = li.classList.contains('open');
+            if(!open){
+                e.preventDefault();
+                closeAll(li);
+                li.classList.add('open');
+                const wrap = li.querySelector('.sub-menu-wrapper');
+                if(wrap){
+                    wrap.style.maxHeight = wrap.scrollHeight + 'px';
+                    wrap.setAttribute('aria-hidden','false');
+                }
+                link.setAttribute('aria-expanded','true');
+            } else {
+                // Toggle closed instead of navigating
+                e.preventDefault();
+                li.classList.remove('open');
+                const wrap = li.querySelector('.sub-menu-wrapper');
+                if(wrap){
+                    wrap.style.maxHeight = null;
+                    wrap.setAttribute('aria-hidden','true');
+                }
+                link.setAttribute('aria-expanded','false');
+            }
+        });
+    });
+
+    document.addEventListener('keydown', function(ev){ if(ev.key === 'Escape') closeAll(); });
+});
 </script>
         </div>
     </header>

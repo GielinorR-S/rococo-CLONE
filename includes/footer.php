@@ -12,17 +12,19 @@
                                     <li><a href="#" aria-label="TikTok">TikTok</a></li>
                                 </ul>
                             </div>
-                            <nav class="footer-col nav-col" aria-label="Footer navigation">
-                                <h3 class="fc-heading">Explore</h3>
-                                <ul class="link-list">
-                                    <li><a href="index.php">Home</a></li>
-                                    <li><a href="menu.php">Menu</a></li>
-                                    <li><a href="venues.php">Venues</a></li>
-                                    <li><a href="functions.php">Functions</a></li>
-                                    <li><a href="our-story.php">Our Story</a></li>
-                                    <li><a href="contact.php">Contact</a></li>
-                                </ul>
-                            </nav>
+                                            <nav class="footer-col nav-col" aria-label="Footer navigation">
+                                                <h3 class="fc-heading">Explore</h3>
+                                                <ul class="link-list">
+                                                    <li><a href="index.php">Home</a></li>
+                                                    <li><a href="booking.php">Book Now</a></li>
+                                                    <li><a href="delivery-takeaway.php">Delivery &amp; Takeaway</a></li>
+                                                    <li><a href="locations-menus.php">Locations &amp; Menus</a></li>
+                                                    <li><a href="group-bookings.php">Group Bookings</a></li>
+                                                    <li><a href="gift-vouchers.php">Gift Vouchers</a></li>
+                                                    <li><a href="employment.php">Employment</a></li>
+                                                    <li><a href="contact.php">Contact</a></li>
+                                                </ul>
+                                            </nav>
                             <div class="footer-col hours-col" aria-labelledby="hours-heading-footer">
                                 <h3 id="hours-heading-footer" class="fc-heading">Hours</h3>
                                 <ul class="hours-list-mini">
