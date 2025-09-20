@@ -5,6 +5,7 @@ USE rococo_db;
 -- Bookings table
 CREATE TABLE IF NOT EXISTS bookings (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    venue VARCHAR(50) DEFAULT NULL,
     date DATE NOT NULL,
     time TIME NOT NULL,
     guests INT NOT NULL,
@@ -14,6 +15,9 @@ CREATE TABLE IF NOT EXISTS bookings (
     special_requests TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- If the table already exists without venue column, run this manually:
+-- ALTER TABLE bookings ADD COLUMN venue VARCHAR(50) NULL AFTER id;
 
 -- Contact entries table
 CREATE TABLE IF NOT EXISTS contact_entries (

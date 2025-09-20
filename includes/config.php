@@ -8,6 +8,10 @@ define('DB_NAME', 'rocco_db');
 
 // Attempt to connect to MySQL database
 $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+// Provide $conn alias for existing code expecting $conn
+if (!isset($conn)) {
+    $conn = $link;
+}
 
 // Check connection
 if($link === false){

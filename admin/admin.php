@@ -51,6 +51,7 @@ if ($_POST['password'] !== $admin_pass) {
             <h2>Recent Bookings</h2>
             <table>
                 <tr>
+                    <th>Venue</th>
                     <th>Name</th>
                     <th>Date & Time</th>
                     <th>Guests</th>
@@ -61,6 +62,7 @@ if ($_POST['password'] !== $admin_pass) {
                 $result = $conn->query("SELECT * FROM bookings ORDER BY created_at DESC LIMIT 10");
                 while ($row = $result->fetch_assoc()) {
                     echo "<tr>
+                        <td>" . htmlspecialchars($row['venue'] ?? '') . "</td>
                         <td>{$row['name']}</td>
                         <td>{$row['date']} at {$row['time']}</td>
                         <td>{$row['guests']}</td>
