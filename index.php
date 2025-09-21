@@ -11,34 +11,38 @@ include 'includes/header.php';
             <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80" class="slider-img" alt="Random Food">
         </div>
     <button class="slider-btn right" onclick="moveSlide(1)">&#10095;</button>
-    <!-- Quick Booking Bar Start -->
-    <div class="quick-booking-wrapper" id="booking">
-        <form class="quick-booking" action="booking.php" method="GET" aria-label="Quick Booking">
-            <div class="qb-field">
-                <label for="qb-venue" class="visually-hidden">Restaurant</label>
-                <?php $validVenues = ['st-kilda','hawthorn','point-cook','mordialloc']; ?>
-                <select id="qb-venue" name="venue" required>
+</div>
+<!-- Hero Image Slider End -->
+<!-- Overlapping Booking Bar (moved up to overlap bottom of hero) -->
+<div class="hero-overlap-booking">
+    <div class="fullwidth-booking-bar overlap" aria-label="Booking Bar">
+        <h2 class="booking-bar-heading">Make a booking</h2>
+        <form class="mid-booking-form" action="booking.php" method="GET">
+            <?php $validVenues = ['st-kilda','hawthorn','point-cook','mordialloc']; ?>
+            <div class="mb-field">
+                <label for="mb-venue" class="visually-hidden">Restaurant</label>
+                <select id="mb-venue" name="venue" required>
                     <option value="" disabled selected>Select Restaurant</option>
                     <?php foreach($validVenues as $v): ?>
                         <option value="<?php echo $v; ?>"><?php echo ucwords(str_replace('-', ' ', $v)); ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
-            <div class="qb-field">
-                <label for="qb-guests" class="visually-hidden">Guests</label>
-                <select id="qb-guests" name="guests" required>
+            <div class="mb-field">
+                <label for="mb-guests" class="visually-hidden">Guests</label>
+                <select id="mb-guests" name="guests" required>
                     <?php for($g=1;$g<=20;$g++): ?>
                         <option value="<?php echo $g; ?>" <?php echo $g===2? 'selected':''; ?>><?php echo $g . ($g===1? ' Person':' People'); ?></option>
                     <?php endfor; ?>
                 </select>
             </div>
-            <div class="qb-field">
-                <label for="qb-date" class="visually-hidden">Date</label>
-                <input type="date" id="qb-date" name="date" required>
+            <div class="mb-field">
+                <label for="mb-date" class="visually-hidden">Date</label>
+                <input type="date" id="mb-date" name="date" required>
             </div>
-            <div class="qb-field">
-                <label for="qb-time" class="visually-hidden">Time</label>
-                <select id="qb-time" name="time" required>
+            <div class="mb-field">
+                <label for="mb-time" class="visually-hidden">Time</label>
+                <select id="mb-time" name="time" required>
                     <option value="" disabled selected>Select Time</option>
                     <option value="12:00">12:00 PM</option>
                     <option value="12:30">12:30 PM</option>
@@ -62,14 +66,14 @@ include 'includes/header.php';
                     <option value="21:30">9:30 PM</option>
                 </select>
             </div>
-            <div class="qb-field qb-submit">
-                <button type="submit" class="qb-button" aria-label="Find a Table">Find a Table</button>
+            <div class="mb-field submit">
+                <button type="submit" class="mb-button" aria-label="Find a Table">Find a Table</button>
             </div>
         </form>
+        <p class="booking-bar-note below">To make a reservation for more than 10 people, please <a href="group-bookings.php" class="no-highlight-link">click here to book via our group booking page</a>.</p>
     </div>
-    <!-- Quick Booking Bar End -->
 </div>
-<!-- Hero Image Slider End -->
+<!-- End Overlapping Booking Bar -->
 <style>
 .hero-slider {
     position: relative;
@@ -133,37 +137,26 @@ document.addEventListener('DOMContentLoaded', function() {
     sliderImages = document.querySelector('.slider-images');
     showSlide(0);
 
-    // Safeguard: ensure guest select includes value 20 (some users reported only up to 19 visible due to caching)
-    const guestSelect = document.getElementById('qb-guests');
-    if(guestSelect){
-        const has20 = Array.from(guestSelect.options).some(o => o.value === '20');
-        if(!has20){
-            const opt = document.createElement('option');
-            opt.value = '20';
-            opt.textContent = '20 People';
-            guestSelect.appendChild(opt);
-        }
-    }
-
-    // Redirect large parties (11+) to group bookings page instead of normal booking flow
-    const quickForm = document.querySelector('.quick-booking');
-    if(quickForm){
-        quickForm.addEventListener('submit', function(e){
-            const guestsSel = quickForm.querySelector('#qb-guests');
+    // Redirect large parties (11+) to group bookings from mid-page booking form
+    const midForm = document.querySelector('.mid-booking-form');
+    if(midForm){
+        midForm.addEventListener('submit', function(e){
+            const guestsSel = midForm.querySelector('#mb-guests');
             const guestsVal = parseInt(guestsSel && guestsSel.value ? guestsSel.value : '0', 10);
             if(guestsVal > 10){
                 e.preventDefault();
-                window.location.href = 'group-bookings.php?guests=' + guestsVal + (quickForm.qb_date ? '&date='+ encodeURIComponent(quickForm.qb_date.value):'');
+                const dateInput = midForm.querySelector('#mb-date');
+                const dateParam = dateInput && dateInput.value ? '&date=' + encodeURIComponent(dateInput.value) : '';
+                window.location.href = 'group-bookings.php?guests=' + guestsVal + dateParam;
             }
         });
     }
 });
 </script>
 
-<!-- Venues Section -->
-<section class="venues-preview page-band" id="venues">
-    <div class="band-inner">
-        <h2 class="section-title">Our Venues</h2>
+<!-- Venues Section (booking bar moved above overlapping hero) -->
+<section class="venues-preview no-gaps" id="venues">
+    <div class="container venues-container-after-bar">
         <div class="venues-grid">
             <article class="venue-card">
                 <div class="venue-image" style="background-image:url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=70');"></div>
@@ -202,8 +195,8 @@ document.addEventListener('DOMContentLoaded', function() {
 </section>
 
 <!-- Delivery & Gift Section (refined layout) -->
-<section class="services-split page-band" id="services">
-    <div class="band-inner services-grid">
+<section class="services-split no-gaps" id="services">
+    <div class="container services-grid">
         <article class="service-block take-away">
             <div class="service-media" aria-hidden="true">
                 <img src="assets/images/delivery-icon.png" srcset="assets/images/delivery-icon@2x.png 2x" alt="Delivery icon" class="service-icon" loading="lazy" width="300" height="120">
@@ -227,9 +220,9 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 </section>
 
-<!-- Staggered Quote / Image Columns -->
-<section class="story-stripe page-band">
-    <div class="band-inner stripe-grid alternating">
+<!-- Staggered Quote / Image Columns (flush variant) -->
+<section class="story-stripe no-gaps">
+    <div class="container stripe-grid alternating">
         <!-- Row 1: Photo | Chef Card -->
         <div class="stripe-row">
             <div class="stripe-item photo" style="background-image:url('https://images.unsplash.com/photo-1520201163981-8cc95007dd2a?auto=format&fit=crop&w=1000&q=70');" aria-label="Dining Room"></div>

@@ -613,7 +613,52 @@ body.home main { margin-top: 0; }
 
 /* Venues */
 .venues-preview { padding: 80px 0 60px; background: var(--color-bg-dark-alt); color: var(--color-text-light); }
+.venues-preview.no-gaps { padding:0; }
 .venues-grid { display:grid; gap:2rem; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); }
+.venues-preview.no-gaps .container { padding:0; max-width:none; }
+.venues-preview.no-gaps .venues-grid { gap:0; }
+.venues-preview.no-gaps .venue-card { border-radius:0; }
+.fullwidth-booking-bar { width:100%; min-height:183px; height:183px; display:flex; align-items:center; justify-content:center; background: linear-gradient(135deg, rgba(20,20,20,.92), rgba(34,34,34,.92)); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding:1.1rem 1.6rem 1.2rem; border-bottom:1px solid rgba(255,255,255,0.04); }
+.fullwidth-booking-bar.overlap { box-shadow:0 12px 40px -8px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.05); border-top:1px solid rgba(255,255,255,0.08); }
+.hero-overlap-booking { position:relative; width:100%; margin-top:-160px; z-index:5; }
+/* Heading & note above booking bar */
+.booking-bar-heading { width:100%; font-family:var(--font-serif); font-size:2.25rem; margin:0 0 1.15rem; letter-spacing:.5px; font-weight:500; color:#fff; text-align:center; }
+.fullwidth-booking-bar.overlap { flex-direction:column; align-items:center; text-align:center; }
+.booking-bar-note { width:100%; margin:1rem 0 0; font-size:.9rem; letter-spacing:.3px; color:#d2d2d2; line-height:1.45; text-align:center; max-width:980px; }
+.booking-bar-note.below { margin-top:1.2rem; }
+.booking-bar-note a.no-highlight-link { color:var(--color-accent); text-decoration:none; border-bottom:1px dotted rgba(255,255,255,0.18); transition:color .2s, border-color .2s; }
+.booking-bar-note a.no-highlight-link:hover { color:var(--color-accent-hover); border-bottom-color: var(--color-accent-hover); }
+.booking-bar-note a.no-highlight-link:focus { outline:2px solid var(--color-accent); outline-offset:3px; }
+@media (max-width:900px){ .booking-bar-heading { font-size:2rem; } }
+@media (max-width:640px){ .booking-bar-heading { font-size:1.6rem; } .booking-bar-note { font-size:.8rem; } }
+/* Ensure hero has bottom padding to show overlap cleanly on smaller screens */
+.hero-slider { padding-bottom:140px; }
+@media (max-width:1200px){ .hero-overlap-booking { margin-top:-150px; } }
+@media (max-width:900px){ .hero-overlap-booking { margin-top:-130px; } .hero-slider { padding-bottom:170px; } }
+@media (max-width:640px){ .hero-overlap-booking { margin-top:-110px; } }
+.mid-booking-form { width:min(1100px,96%); display:flex; gap:.35rem; align-items:stretch; justify-content:center; flex-wrap:nowrap; }
+.mid-booking-form .mb-field { display:flex; flex-direction:column; flex:0 0 auto; }
+.mid-booking-form select,
+.mid-booking-form input[type=date] { background:rgba(255,255,255,0.14); color:#fff; border:1px solid rgba(255,255,255,0.35); padding:.9rem 1rem; font-size:.95rem; border-radius:6px; font-family:var(--font-sans,inherit); letter-spacing:.3px; }
+.mid-booking-form select option { background:#121212; color:#f0f0f0; }
+.mid-booking-form select:focus option { color:#fff; }
+.mid-booking-form select::placeholder,
+.mid-booking-form input[type=date]::placeholder { color:#d0d0d0; }
+.mid-booking-form select:focus,
+.mid-booking-form input[type=date]:focus { background:rgba(255,255,255,0.22); }
+.mid-booking-form select:hover,
+.mid-booking-form input[type=date]:hover { background:rgba(255,255,255,0.18); }
+.mid-booking-form select:focus,
+.mid-booking-form input[type=date]:focus { outline:2px solid var(--color-accent); outline-offset:2px; }
+.mid-booking-form .mb-button { width:100%; height:100%; background:var(--color-accent); color:#fff; border:0; padding:1rem 1.2rem; font-weight:600; letter-spacing:.5px; border-radius:6px; cursor:pointer; font-size:.95rem; transition: background .2s, transform .15s; }
+.mid-booking-form .mb-button:hover { background:var(--color-accent-hover); }
+.mid-booking-form .mb-button:active { transform:translateY(2px); }
+.mid-booking-form .submit { align-self:stretch; display:flex; }
+@media (max-width:1250px){ .mid-booking-form { width:min(1000px,96%); } }
+@media (max-width:1050px){ .mid-booking-form { flex-wrap:wrap; justify-content:center; } }
+@media (max-width:900px){ .fullwidth-booking-bar { min-height:auto; height:auto; padding:1.35rem 1.2rem 1.55rem; } }
+@media (max-width:760px){ .mid-booking-form { gap:.45rem; } }
+@media (max-width:640px){ .fullwidth-booking-bar { padding:1.25rem 1rem 1.35rem; height:auto; } .mid-booking-form { gap:.5rem; } }
 .venue-card { background:var(--color-bg-panel); border:1px solid var(--color-border-faint); border-radius:10px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 2px 4px rgba(0,0,0,0.3); transition: transform var(--transition-fast), box-shadow var(--transition-fast); }
 .venue-card:hover { transform: translateY(-4px); box-shadow:0 6px 18px rgba(0,0,0,0.12); }
 .venue-image { aspect-ratio: 4/3; background-size:cover; background-position:center; }
@@ -625,7 +670,25 @@ body.home main { margin-top: 0; }
 
 /* Services Split */
 .services-split { padding:70px 0; background:#111; color:var(--color-white); }
+.services-split.no-gaps { padding:0; }
 .services-grid { display:grid; gap:2rem; grid-template-columns: repeat(2, 1fr); align-items:stretch; }
+.services-split.no-gaps .container { padding:0; max-width:none; }
+.services-split.no-gaps .services-grid { gap:0; }
+.services-split.no-gaps .service-block { border-radius:0; }
+/* Remove section title margins in no-gap run */
+.venues-preview.no-gaps .section-title,
+.services-split.no-gaps .section-title,
+.story-stripe.no-gaps .section-title { margin:0; }
+
+/* Remove vertical spacing between consecutive no-gap sections */
+.venues-preview.no-gaps + .services-split.no-gaps,
+.services-split.no-gaps + .story-stripe.no-gaps { margin-top:0; }
+
+/* Ensure images/media stretch fully */
+.venues-preview.no-gaps .venue-image,
+.services-split.no-gaps .service-media,
+.services-split.no-gaps .service-block,
+.venues-preview.no-gaps .venue-card { margin:0; }
 .service-block { position:relative; display:grid; grid-template-rows: 180px 1fr; background:var(--color-bg-panel); border:1px solid var(--color-border-soft); border-radius:18px; overflow:hidden; }
 .service-block .service-media { background-size:cover; background-position:center; filter:brightness(.85); }
 .service-block.take-away .service-media { background-image:url('https://images.unsplash.com/photo-1600891965059-04f33795804c?auto=format&fit=crop&w=1000&q=70'); }
@@ -642,6 +705,15 @@ body.home main { margin-top: 0; }
 .stripe-row { display:grid; grid-template-columns: repeat(2, minmax(300px, 1fr)); gap:2.2rem; width:100%; justify-content:center; align-items:stretch; }
 .stripe-row + .stripe-row { margin-top:2.2rem; }
 .stripe-row .stripe-item { width:100%; height:520px; }
+/* Flush / no-gap variant */
+.story-stripe.no-gaps { padding:0; }
+.story-stripe.no-gaps .stripe-grid { gap:0; width:100%; max-width:none; }
+.story-stripe.no-gaps .stripe-row { gap:0; }
+.story-stripe.no-gaps .stripe-row + .stripe-row { margin-top:0; }
+.story-stripe.no-gaps .stripe-item { border-radius:0; width:100%; height:520px; }
+@media (max-width:1500px){ .story-stripe.no-gaps .stripe-item { height:480px; } }
+@media (max-width:1100px){ .story-stripe.no-gaps .stripe-row { grid-template-columns:1fr; } .story-stripe.no-gaps .stripe-item { height:420px; } }
+@media (max-width:720px){ .story-stripe.no-gaps .stripe-item { height:360px; } }
 @media (max-width:1500px){ .stripe-row .stripe-item { height:480px; } }
 @media (max-width:1100px){ .stripe-row { grid-template-columns:1fr; } .stripe-row .stripe-item { height:420px; } }
 @media (max-width:720px){ .stripe-row .stripe-item { height:360px; } }
