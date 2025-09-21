@@ -39,6 +39,7 @@ function render_shop_sidebar(string $location, array $categories, ?int $selected
     }
 
     echo '<aside class="shop-sidebar" aria-label="Categories" data-location="'.htmlspecialchars($location).'">';    
+    echo '<div class="inner-pad">';
     echo '<h2 class="visually-hidden">Categories</h2>';
     // All Items link
     echo '<ul class="cat-list all-list"><li><a class="'.(!$selectedCat ? 'active':'').'" href="shop.php?location='.urlencode($location).'">All Items</a></li></ul>';
@@ -63,6 +64,6 @@ function render_shop_sidebar(string $location, array $categories, ?int $selected
         echo '</ul>';
         echo '</div>';
     }
-    echo '</aside>';
+    echo '</div></aside>';
 }
 ?>

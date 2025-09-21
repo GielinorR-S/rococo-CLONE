@@ -9,6 +9,22 @@ if (session_status() === PHP_SESSION_NONE) {
 
 require_once __DIR__.'/config.php';
 
+// Normalize mysqli connection variable
+// Existing config defines $link and $conn. Some admin code expects $mysqli.
+if(!isset($mysqli) || !($mysqli instanceof mysqli)) {
+    if(isset($conn) && $conn instanceof mysqli) {
+        $mysqli = $conn;
+    } elseif(isset($link) && $link instanceof mysqli) {
+        $mysqli = $link;
+    } else {
+        // Fallback: establish a new connection (should rarely happen)
+        $mysqli = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        if(!$mysqli) {
+            die('Admin DB connection failed: '.mysqli_connect_error());
+        }
+    }
+}
+
 function ensure_admin_tables($mysqli){
     $mysqli->query("CREATE TABLE IF NOT EXISTS admin_users (\n        id INT AUTO_INCREMENT PRIMARY KEY,\n        username VARCHAR(100) NOT NULL UNIQUE,\n        password_hash VARCHAR(255) NOT NULL,\n        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
 
@@ -24,7 +40,11 @@ function ensure_admin_tables($mysqli){
     }}
 }
 
-ensure_admin_tables($mysqli);
+// Ensure tables only once per request
+if(!isset($GLOBALS['__ADMIN_TABLES_ENSURED'])) {
+    ensure_admin_tables($mysqli);
+    $GLOBALS['__ADMIN_TABLES_ENSURED'] = true;
+}
 
 function admin_logged_in(){
     return !empty($_SESSION['admin_user']);

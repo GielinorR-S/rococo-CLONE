@@ -187,26 +187,30 @@ function get_categories_for_location(string $location): array {
 }
 
 function get_products(string $location, ?int $categoryId = null): array {
+    // Location intentionally ignored so every location shows unified catalog.
+    // When no category filter is applied ("ALL ITEMS" view) we suppress duplicates by name
+    // choosing the lowest id (oldest) product for each case-insensitive name.
     $db = rocco_db();
-    $params = [$location];
-    $types = 's';
-    $where = 'c.location_slug = ?';
     if($categoryId !== null){
-        $where .= ' AND p.category_id = ?';
-        $params[] = $categoryId;
-        $types .= 'i';
+        $stmt = $db->prepare("SELECT p.id, p.name, p.description, p.price, p.image_url, p.category_id
+                               FROM products p
+                               WHERE p.category_id = ? AND p.is_active = 1
+                               ORDER BY p.name");
+        $stmt->bind_param('i', $categoryId);
+    } else {
+        // Distinct-by-name (case-insensitive) selection using a self-join on MIN(id)
+        $stmt = $db->prepare("SELECT p.id, p.name, p.description, p.price, p.image_url, p.category_id
+                               FROM products p
+                               JOIN (
+                                   SELECT LOWER(name) AS lname, MIN(id) AS keep_id
+                                   FROM products
+                                   WHERE is_active = 1
+                                   GROUP BY LOWER(name)
+                               ) g ON g.keep_id = p.id
+                               WHERE p.is_active = 1
+                               ORDER BY p.name");
     }
-    $sql = "SELECT p.id, p.name, p.description, p.price, p.image_url, p.category_id
-            FROM products p
-            JOIN product_categories c ON c.id = p.category_id
-            WHERE $where AND p.is_active = 1
-            ORDER BY p.name";
-    $stmt = $db->prepare($sql);
-        if($categoryId !== null){
-            $stmt->bind_param('si', $location, $categoryId);
-        } else {
-            $stmt->bind_param('s', $location);
-        }
+    if(!$stmt){ return []; }
     $stmt->execute();
     $res = $stmt->get_result();
     $items = [];
@@ -360,11 +364,90 @@ function product_fallback_image(string $name): string {
         'diavola' => 'https://images.unsplash.com/photo-1601924928376-3e3a122390f1?auto=format&fit=crop&w=800&q=60',
         'spaghetti carbonara' => 'https://images.unsplash.com/photo-1612927601601-e6e1311bb65c?auto=format&fit=crop&w=800&q=60',
         'veal parmigiana' => 'https://images.unsplash.com/photo-1627308595229-7830a5c91f9f?auto=format&fit=crop&w=800&q=60',
-        'tiramisu' => 'https://images.unsplash.com/photo-1601972599720-b7cd5b1a3a35?auto=format&fit=crop&w=800&q=60'
+        'tiramisu' => 'https://images.unsplash.com/photo-1601972599720-b7cd5b1a3a35?auto=format&fit=crop&w=800&q=60',
+        'arancini porcini' => 'https://images.unsplash.com/photo-1606491956689-2ea866880c84?auto=format&fit=crop&w=800&q=60',
+        'calamari fritti' => 'https://images.unsplash.com/photo-1619140099965-bdde26b2cc82?auto=format&fit=crop&w=800&q=60',
+        'gamberi aglio e olio' => 'https://images.unsplash.com/photo-1585478259715-876acc5d022b?auto=format&fit=crop&w=800&q=60',
+        'mussels bianco' => 'https://images.unsplash.com/photo-1617196034717-40e4ca36b1e3?auto=format&fit=crop&w=800&q=60',
+        'charred broccolini' => 'https://images.unsplash.com/photo-1604908553562-9b84a2210a7b?auto=format&fit=crop&w=800&q=60',
+        'caponata siciliana' => 'https://images.unsplash.com/photo-1608138075280-af7f74c37e3e?auto=format&fit=crop&w=800&q=60',
+        'lasagne al forno' => 'https://images.unsplash.com/photo-1600628421060-93906a1c7483?auto=format&fit=crop&w=800&q=60',
+        'penne arrabbiata' => 'https://images.unsplash.com/photo-1551892374-ecf8754cf8c0?auto=format&fit=crop&w=800&q=60',
+        'gnocchi sorrentina' => 'https://images.unsplash.com/photo-1627308595229-7830a5c91f9f?auto=format&fit=crop&w=800&q=60',
+        'funghi' => 'https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=800&q=60',
+        'prosciutto e rucola' => 'https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=800&q=60',
+        'pollo al limone' => 'https://images.unsplash.com/photo-1601312378625-b4d3cb43f7a5?auto=format&fit=crop&w=800&q=60',
+        'bistecca tagliata' => 'https://images.unsplash.com/photo-1601312378606-d8d3c9c136c7?auto=format&fit=crop&w=800&q=60',
+        'panna cotta' => 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=800&q=60'
     ];
     if(isset($map[$key])) return $map[$key];
     // generic Italian food fallback
     return 'https://images.unsplash.com/photo-1529692236671-f1dc28b14e18?auto=format&fit=crop&w=800&q=60';
+}
+
+// Provide multiple suggestion URLs (first one would typically be used as fallback) for admin UI assistance.
+function product_image_suggestions(string $name): array {
+    $key = strtolower($name);
+    $suggest = [];
+    // Use broad keyword buckets
+    $buckets = [
+        'pizza' => [
+            'https://images.unsplash.com/photo-1601924582971-b7eabf6d5f5d?auto=format&fit=crop&w=800&q=60',
+            'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=800&q=60',
+            'https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=800&q=60'
+        ],
+        'pasta' => [
+            'https://images.unsplash.com/photo-1617196034796-73dfa7f4c9d0?auto=format&fit=crop&w=800&q=60',
+            'https://images.unsplash.com/photo-1521389508051-d7ffb5dc8d61?auto=format&fit=crop&w=800&q=60',
+            'https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=60'
+        ],
+        'seafood' => [
+            'https://images.unsplash.com/photo-1612195589085-d3c9713a0c80?auto=format&fit=crop&w=800&q=60',
+            'https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=800&q=60',
+            'https://images.unsplash.com/photo-1601312378427-8220a4193c8e?auto=format&fit=crop&w=800&q=60'
+        ],
+        'dolci' => [
+            'https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=800&q=60',
+            'https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=800&q=60',
+            'https://images.unsplash.com/photo-1601972599720-b7cd5b1a3a35?auto=format&fit=crop&w=800&q=60'
+        ],
+        'bread' => [
+            'https://images.unsplash.com/photo-1604917173596-e30ba64b3ba7?auto=format&fit=crop&w=800&q=60',
+            'https://images.unsplash.com/photo-1608198093002-ad4e005484ec?auto=format&fit=crop&w=800&q=60'
+        ],
+        'salad' => [
+            'https://images.unsplash.com/photo-1550304943-4f24f54ddde9?auto=format&fit=crop&w=800&q=60',
+            'https://images.unsplash.com/photo-1551248429-40975aa4de74?auto=format&fit=crop&w=800&q=60'
+        ],
+        'arancini' => [
+            'https://images.unsplash.com/photo-1606491956689-2ea866880c84?auto=format&fit=crop&w=800&q=60'
+        ],
+        'calamari' => [
+            'https://images.unsplash.com/photo-1619140099965-bdde26b2cc82?auto=format&fit=crop&w=800&q=60'
+        ],
+        'gnocchi' => [
+            'https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=60'
+        ],
+        'lasagne' => [
+            'https://images.unsplash.com/photo-1600628421060-93906a1c7483?auto=format&fit=crop&w=800&q=60'
+        ],
+        'bruschetta' => [
+            'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=60'
+        ]
+    ];
+    foreach($buckets as $kw => $arr){
+        if(str_contains($key, $kw)){
+            $suggest = array_merge($suggest, $arr);
+        }
+    }
+    // If nothing matched, fall back to returning the generic plus fallback image
+    if(!$suggest){
+        $suggest[] = product_fallback_image($name);
+        $suggest[] = 'https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=800&q=60'; // generic Italian table
+    }
+    // Ensure uniqueness
+    $suggest = array_values(array_unique($suggest));
+    return $suggest;
 }
 
 // ------------------ CART ---------------------
