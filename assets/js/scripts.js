@@ -218,8 +218,29 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 (function(){
   const panel = document.getElementById('cart');
   if(!panel) return;
+  // Quantity steppers (delegated for both product cards and cart)
+  function attachQtySteppers(root){
+      (root || document).querySelectorAll('[data-qty-wrapper]').forEach(wrap => {
+          if(wrap._enhanced) return; wrap._enhanced = true;
+          const input = wrap.querySelector('input[type=number]');
+          if(!input) return;
+          wrap.addEventListener('click', e => {
+              const btn = e.target.closest('.qty-btn');
+              if(!btn) return;
+              e.preventDefault();
+              const step = parseInt(btn.getAttribute('data-step'),10)||0;
+              let current = parseInt(input.value,10); if(isNaN(current)) current = 0;
+              const min = parseInt(input.getAttribute('min')||'0',10);
+              const next = Math.max(min, current + step);
+              input.value = next;
+              input.dispatchEvent(new Event('change', {bubbles:true}));
+          });
+      });
+  }
+  attachQtySteppers();
   function updateCartDOM(html, message){
       panel.innerHTML = '<h2 class="cart-heading">Your Cart</h2>' + (message?('<div class="cart-alert" role="status" aria-live="polite">'+message+'</div>'):'') + html;
+        attachQtySteppers(panel);
   }
   async function postCart(formData){
       const resp = await fetch('cart_api.php', {method:'POST', body: formData});

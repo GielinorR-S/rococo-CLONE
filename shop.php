@@ -107,11 +107,15 @@ $totals = cart_totals();
                   <span class="price"><?php echo money($p['price']); ?></span>
                 </h3>
                 <?php if(!empty($p['description'])): ?><p class="desc"><?php echo htmlspecialchars($p['description']); ?></p><?php endif; ?>
-                <form method="post" class="add-form">
+                <form method="post" class="add-form" data-product-id="<?php echo $p['id']; ?>">
                   <input type="hidden" name="action" value="add" />
                   <input type="hidden" name="product_id" value="<?php echo $p['id']; ?>" />
-                  <label class="visually-hidden" for="qty-<?php echo $p['id']; ?>">Quantity</label>
-                  <input id="qty-<?php echo $p['id']; ?>" type="number" min="1" value="1" name="qty" class="qty-input" />
+                  <div class="qty-wrapper" data-qty-wrapper>
+                    <button type="button" class="qty-btn minus" aria-label="Decrease quantity" data-step="-1">−</button>
+                    <label class="visually-hidden" for="qty-<?php echo $p['id']; ?>">Quantity</label>
+                    <input id="qty-<?php echo $p['id']; ?>" type="number" min="1" value="1" name="qty" class="qty-input" />
+                    <button type="button" class="qty-btn plus" aria-label="Increase quantity" data-step="1">+</button>
+                  </div>
                   <button class="btn add-btn" type="submit">Add</button>
                 </form>
               </div>
@@ -138,8 +142,12 @@ $totals = cart_totals();
                     <span class="cl-price"><?php echo money($line['price']); ?></span>
                   </div>
                   <div class="cl-actions">
-                    <label class="visually-hidden" for="clqty-<?php echo $line['id']; ?>">Qty for <?php echo htmlspecialchars($line['name']); ?></label>
-                    <input id="clqty-<?php echo $line['id']; ?>" name="qty[<?php echo $line['id']; ?>]" type="number" min="0" value="<?php echo (int)$line['quantity']; ?>" />
+                    <div class="qty-wrapper" data-qty-wrapper>
+                      <button type="button" class="qty-btn minus" aria-label="Decrease quantity" data-step="-1">−</button>
+                      <label class="visually-hidden" for="clqty-<?php echo $line['id']; ?>">Qty for <?php echo htmlspecialchars($line['name']); ?></label>
+                      <input id="clqty-<?php echo $line['id']; ?>" name="qty[<?php echo $line['id']; ?>]" type="number" min="0" value="<?php echo (int)$line['quantity']; ?>" />
+                      <button type="button" class="qty-btn plus" aria-label="Increase quantity" data-step="1">+</button>
+                    </div>
                     <button form="remove-line-<?php echo $line['id']; ?>" class="remove-btn" type="submit" aria-label="Remove <?php echo htmlspecialchars($line['name']); ?>">×</button>
                   </div>
                   <div class="cl-total"><?php echo money($line['line_total']); ?></div>
