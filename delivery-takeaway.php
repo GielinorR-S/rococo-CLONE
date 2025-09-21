@@ -33,7 +33,7 @@ include 'includes/header.php';
         <span class="dt-badge">Made To Order</span>
       </div>
       <div class="dt-faq" aria-labelledby="dt-faq-heading">
-        <h3 id="dt-faq-heading" class="vh">Delivery & takeaway FAQs</h3>
+  <h3 id="dt-faq-heading" class="visually-hidden">Delivery & takeaway FAQs</h3>
         <details>
           <summary>Typical delivery time?</summary>
           <p>Our target window is 35–55 minutes depending on distance & service pace. We’ll advise if it’s longer.</p>

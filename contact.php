@@ -93,23 +93,23 @@ include 'includes/header.php';
             </div>
             <form action="contact-process.php" method="POST" class="contact-form-grid" novalidate>
                 <div class="form-row">
-                    <label for="cf-name" class="vh">Name</label>
+                    <label for="cf-name" class="visually-hidden">Name</label>
                     <input id="cf-name" name="name" type="text" placeholder="Name" required>
                 </div>
                 <div class="form-row">
-                    <label for="cf-email" class="vh">Email</label>
+                    <label for="cf-email" class="visually-hidden">Email</label>
                     <input id="cf-email" name="email" type="email" placeholder="Email" required>
                 </div>
                 <div class="form-row">
-                    <label for="cf-phone" class="vh">Phone</label>
+                    <label for="cf-phone" class="visually-hidden">Phone</label>
                     <input id="cf-phone" name="phone" type="tel" placeholder="Phone">
                 </div>
                 <div class="form-row">
-                    <label for="cf-subject" class="vh">Subject</label>
+                    <label for="cf-subject" class="visually-hidden">Subject</label>
                     <input id="cf-subject" name="subject" type="text" placeholder="Subject">
                 </div>
                 <div class="form-row full">
-                    <label for="cf-message" class="vh">Message</label>
+                    <label for="cf-message" class="visually-hidden">Message</label>
                     <textarea id="cf-message" name="message" placeholder="Message" required></textarea>
                 </div>
                 <div class="form-actions full">

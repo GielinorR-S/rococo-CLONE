@@ -1,7 +1,7 @@
                 </main>
                 <footer class="site-footer" aria-labelledby="footer-heading">
                     <div class="footer-top">
-                        <h2 id="footer-heading" class="vh">Footer</h2>
+                        <h2 id="footer-heading" class="visually-hidden">Footer</h2>
                         <div class="footer-grid">
                             <div class="footer-col brand-col">
                                 <div class="brand-mark">ROCCO</div>
@@ -43,7 +43,7 @@
                                 </address>
                                 <form class="newsletter-mini" action="newsletter.php" method="POST" aria-label="Newsletter subscription">
                                     <div class="nm-field">
-                                        <label for="foot-email" class="vh">Email</label>
+                                        <label for="foot-email" class="visually-hidden">Email</label>
                                         <input type="email" id="foot-email" name="email" placeholder="Email" required>
                                         <button type="submit" class="nm-btn" aria-label="Subscribe">→</button>
                                     </div>
@@ -61,7 +61,7 @@
                         </ul>
                     </div>
                 </footer>
-                <script src="assets/js/script.js"></script>
+                <script src="assets/js/scripts.js"></script>
             </body>
             </html>
             <?php ob_end_flush(); ?>

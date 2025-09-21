@@ -147,3 +147,131 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         }
     });
 })();
+
+// ----------------- Shop cart enhancements (progressive) -----------------
+(function(){
+    const cartForm = document.querySelector('.cart-form');
+    const cartPanel = document.getElementById('cart');
+    const focusCart = () => {
+        if(!cartPanel) return;
+        const alert = cartPanel.querySelector('.cart-alert');
+        // prefer alert if exists
+        if(alert){ alert.setAttribute('tabindex','-1'); alert.focus(); setTimeout(()=>{ alert.removeAttribute('tabindex'); }, 1000); return; }
+        cartPanel.focus();
+    };
+    if(window.location.hash === '#cart') {
+        setTimeout(focusCart, 60);
+    }
+    // If a cart alert exists (session message) focus it regardless of hash
+    if(cartPanel && cartPanel.querySelector('.cart-alert')) {
+        setTimeout(focusCart, 60);
+    }
+    if(!cartForm) return;
+    cartForm.addEventListener('change', function(e){
+        const t = e.target;
+        if(t.matches('input[type=number]')) {
+            // debounce small delay before auto-submit update
+            clearTimeout(cartForm._debounce);
+            cartForm._debounce = setTimeout(()=>{
+                if(!cartForm.querySelector('input[name=action]')) return;
+                cartForm.querySelector('input[name=action]').value = 'update';
+                cartForm.submit();
+            }, 600);
+        }
+    });
+})();
+
+// ----------------- Collapsible category groups -----------------
+(function(){
+    const sidebar = document.querySelector('.shop-sidebar');
+    if(!sidebar) return;
+    const toggles = sidebar.querySelectorAll('.cat-toggle');
+    // Versioned key so structural behavior changes (default-collapsed) take effect fresh
+    const storeKey = 'shopCatGroups_v2';
+    // Clean up legacy key once (non-blocking)
+    try { localStorage.removeItem('shopCatGroups'); } catch(e){}
+    let state = {};
+    try { state = JSON.parse(localStorage.getItem(storeKey) || '{}'); } catch(e){ state = {}; }
+    toggles.forEach(btn => {
+        const controls = btn.getAttribute('aria-controls');
+        const list = document.getElementById(controls);
+        if(!list) return;
+        // Apply persisted state if exists
+        if(typeof state[controls] !== 'undefined') {
+            const expanded = !!state[controls];
+            btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+            if(!expanded) list.setAttribute('hidden',''); else list.removeAttribute('hidden');
+        }
+        btn.addEventListener('click', () => {
+            const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+            const next = !isExpanded;
+            btn.setAttribute('aria-expanded', next ? 'true':'false');
+            if(next) { list.removeAttribute('hidden'); }
+            else { list.setAttribute('hidden',''); }
+            state[controls] = next;
+            try { localStorage.setItem(storeKey, JSON.stringify(state)); } catch(e){}
+        });
+    });
+})();
+
+// ----------------- AJAX Add to Cart (prevent page jump) -----------------
+(function(){
+  const panel = document.getElementById('cart');
+  if(!panel) return;
+  function updateCartDOM(html, message){
+      panel.innerHTML = '<h2 class="cart-heading">Your Cart</h2>' + (message?('<div class="cart-alert" role="status" aria-live="polite">'+message+'</div>'):'') + html;
+  }
+  async function postCart(formData){
+      const resp = await fetch('cart_api.php', {method:'POST', body: formData});
+      if(!resp.ok) return;
+      const data = await resp.json();
+      if(data.cart_html){ updateCartDOM(data.cart_html, data.message); attachDynamicHandlers(); focusAfterUpdate(); }
+  }
+  function focusAfterUpdate(){
+      const alert = panel.querySelector('.cart-alert');
+      if(alert){ alert.setAttribute('tabindex','-1'); alert.focus(); setTimeout(()=>alert.removeAttribute('tabindex'),800); }
+  }
+  function attachDynamicHandlers(){
+      const form = panel.querySelector('form.cart-form[data-ajax]') || panel.querySelector('form.cart-form');
+      if(form){
+          form.addEventListener('submit', e => {
+              e.preventDefault();
+              const fd = new FormData(form);
+              fd.set('action','update');
+              postCart(fd);
+          });
+          form.querySelectorAll('input[type=number]').forEach(inp => {
+                inp.addEventListener('change', ()=>{
+                    clearTimeout(inp._deb); inp._deb=setTimeout(()=>{
+                         const fd = new FormData(form);
+                         fd.set('action','update');
+                         postCart(fd);
+                    },500);
+                });
+          });
+          form.querySelectorAll('[data-remove]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                     const fd = new FormData();
+                     fd.set('action','remove'); fd.set('product_id', btn.getAttribute('data-remove'));
+                     postCart(fd);
+                });
+          });
+          const clearBtn = form.querySelector('[data-clear]');
+          if(clearBtn){
+                clearBtn.addEventListener('click', () => {
+                     if(!confirm('Clear all items from cart?')) return;
+                     const fd = new FormData(); fd.set('action','clear_cart'); postCart(fd);
+                });
+          }
+      }
+  }
+  // Intercept add forms
+  document.querySelectorAll('form.add-form').forEach(f => {
+      f.addEventListener('submit', e => {
+          e.preventDefault();
+          const fd = new FormData(f);
+          postCart(fd);
+      });
+  });
+  attachDynamicHandlers();
+})();

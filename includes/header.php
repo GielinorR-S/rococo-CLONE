@@ -44,9 +44,9 @@ session_start(); // Start a session for user messages
                             <a href="delivery-takeaway.php" class="nav-parent <?php if (basename($_SERVER['PHP_SELF']) == 'delivery-takeaway.php') echo 'active'; ?>" aria-expanded="false">Delivery &amp; Takeaway</a>
                             <div class="sub-menu-wrapper" aria-hidden="true">
                                 <ul class="sub-menu" aria-label="Delivery venues">
-                                    <li><a href="booking.php?venue=St+Kilda">St Kilda</a></li>
-                                    <li><a href="booking.php?venue=Hawthorn">Hawthorn</a></li>
-                                    <li><a href="booking.php?venue=Point+Cook">Point Cook</a></li>
+                                    <li><a href="shop.php?location=stkilda">St Kilda</a></li>
+                                    <li><a href="shop.php?location=hawthorn">Hawthorn</a></li>
+                                    <li><a href="shop.php?location=pointcook">Point Cook</a></li>
                                 </ul>
                             </div>
                         </li>

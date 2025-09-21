@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                    <?php endif; ?>
                    <form action="booking.php" method="POST" novalidate class="booking-form" aria-label="Booking Form">
                        <fieldset class="fg fg-inline">
-                           <legend class="vh">Reservation Details</legend>
+                           <legend class="visually-hidden">Reservation Details</legend>
                            <div class="form-row">
                                <label for="venue">Venue</label>
                                <select id="venue" name="venue" aria-invalid="<?php echo isset($errors['venue'])? 'true':'false'; ?>">
@@ -142,7 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                            </div>
                        </fieldset>
                        <fieldset class="fg">
-                           <legend class="vh">Contact Details</legend>
+                           <legend class="visually-hidden">Contact Details</legend>
                            <div class="form-row">
                                <label for="name">Full Name</label>
                                <input type="text" id="name" name="name" maxlength="120" value="<?php echo htmlspecialchars($name ?? ''); ?>" aria-invalid="<?php echo isset($errors['name'])? 'true':'false'; ?>">
@@ -160,7 +160,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                            </div>
                        </fieldset>
                        <fieldset class="fg">
-                           <legend class="vh">Preferences</legend>
+                           <legend class="visually-hidden">Preferences</legend>
                            <div class="form-row">
                                <label for="seating">Seating Preference <span class="opt">(optional)</span></label>
                                <select id="seating" name="seating">

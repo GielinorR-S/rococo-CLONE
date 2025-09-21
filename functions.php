@@ -63,27 +63,27 @@ include 'includes/header.php';
         </div>
         <form class="enquiry-form" action="functions-process.php" method="POST" novalidate>
             <div class="form-row">
-                <label class="vh" for="fn-name">Name</label>
+                <label class="visually-hidden" for="fn-name">Name</label>
                 <input id="fn-name" type="text" name="name" placeholder="Your Name" required>
             </div>
             <div class="form-row">
-                <label class="vh" for="fn-email">Email</label>
+                <label class="visually-hidden" for="fn-email">Email</label>
                 <input id="fn-email" type="email" name="email" placeholder="Email" required>
             </div>
             <div class="form-row">
-                <label class="vh" for="fn-phone">Phone</label>
+                <label class="visually-hidden" for="fn-phone">Phone</label>
                 <input id="fn-phone" type="tel" name="phone" placeholder="Phone" required>
             </div>
             <div class="form-row">
-                <label class="vh" for="fn-date">Event Date</label>
+                <label class="visually-hidden" for="fn-date">Event Date</label>
                 <input id="fn-date" type="date" name="event_date" placeholder="Event Date">
             </div>
             <div class="form-row">
-                <label class="vh" for="fn-guests">Guests</label>
+                <label class="visually-hidden" for="fn-guests">Guests</label>
                 <input id="fn-guests" type="number" name="guests" min="1" placeholder="Guests">
             </div>
             <div class="form-row full">
-                <label class="vh" for="fn-message">Message</label>
+                <label class="visually-hidden" for="fn-message">Message</label>
                 <textarea id="fn-message" name="message" rows="5" placeholder="Tell us about your event (style, occasion, timing)" required></textarea>
             </div>
             <div class="form-actions">

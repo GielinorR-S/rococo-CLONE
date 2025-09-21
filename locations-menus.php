@@ -11,7 +11,7 @@ include 'includes/header.php';
   </section>
   <section class="lm-locations" aria-labelledby="loc-heading">
     <div class="wide-wrap">
-      <h2 id="loc-heading" class="vh">Locations</h2>
+  <h2 id="loc-heading" class="visually-hidden">Locations</h2>
       <div class="loc-grid">
         <article class="loc-card" aria-labelledby="loc-stk"><div class="loc-media" style="background-image:url('assets/images/st-kilda-venue.jpg');" aria-hidden="true"></div><div class="loc-body"><h3 id="loc-stk">St Kilda</h3><p>Bustling coastal energy & classic social plates.</p><div class="loc-actions"><a href="booking.php?venue=St+Kilda" class="mini-link">Book →</a><a href="menu.php#pasta" class="mini-link">Sample Menu →</a></div></div></article>
         <article class="loc-card" aria-labelledby="loc-haw"><div class="loc-media" style="background-image:url('assets/images/hawthorn-venue.jpg');" aria-hidden="true"></div><div class="loc-body"><h3 id="loc-haw">Hawthorn</h3><p>Light, refined, neighbourhood dining & aperitivo.</p><div class="loc-actions"><a href="booking.php?venue=Hawthorn" class="mini-link">Book →</a><a href="menu.php#antipasti" class="mini-link">Sample Menu →</a></div></div></article>
