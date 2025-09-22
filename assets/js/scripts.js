@@ -1,21 +1,4 @@
-// Mobile Navigation Toggle
-const hamburger = document.querySelector('.hamburger');
-const navLinks = document.querySelector('.nav-links');
-
-if (hamburger) {
-    hamburger.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-        hamburger.classList.toggle('active');
-    });
-}
-
-// Close mobile menu when clicking on a link
-document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-        navLinks.classList.remove('active');
-        hamburger.classList.remove('active');
-    });
-});
+// (Legacy .nav-links mobile toggle removed; replaced by popup-menu off-canvas system below)
 
 // Smooth scrolling for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -30,6 +13,198 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         }
     });
 });
+
+// ----------------- Primary Navigation / Off-canvas -----------------
+(function(){
+    // Defer until DOM ready to guarantee elements exist
+    if(document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initNav); }
+    else initNav();
+
+    function initNav(){
+        const menu = document.getElementById('popup-menu');
+        const overlay = document.getElementById('popup-menu-overlay');
+        const hamburger = document.getElementById('hamburger-menu');
+        const closeBtn = document.getElementById('close-menu');
+    if(!menu || !overlay || !hamburger) return;
+
+    // Dynamic hamburger midpoint positioning on mobile: place button halfway between
+    // viewport left (0) and the left edge of the centered logo, within min/max clamps.
+    function positionHamburger(){
+        // Only active on small screens
+        if(window.innerWidth > 640){ hamburger.style.left=''; return; }
+        const logo = document.querySelector('.logo'); if(!logo) return;
+        const rect = logo.getBoundingClientRect();
+        const logoLeft = rect.left; // distance from viewport left to logo start
+        if(logoLeft <= 0){ requestAnimationFrame(positionHamburger); return; }
+
+    const buttonWidth = hamburger.offsetWidth || 40;
+    const vw = window.innerWidth;
+    // Adaptive proportional gap model (boost gap below 425px without moving logo)
+    let gapFactor = 0.11; // baseline
+    // Boost gap factor more aggressively so hamburger anchors further left relative to logo on very small widths
+    if(vw <= 425) gapFactor = 0.14;
+    if(vw <= 390) gapFactor = 0.155;
+    if(vw <= 360) gapFactor = 0.17;
+    if(vw <= 340) gapFactor = 0.182;
+    const minGap = vw <= 360 ? 30 : vw <= 425 ? 28 : 26; // maintain a solid minimum
+    const maxGap = vw <= 340 ? 50 : vw <= 360 ? 48 : vw <= 390 ? 46 : 44; // allow slightly larger visual separation
+    const BASE_INSET = 10;        // minimum left inset from viewport edge
+    const MAX_INSET = Math.min(110, Math.round(vw * 0.36)); // slightly higher ceiling so increased gap doesn't clamp early
+
+    const rawGap = vw * gapFactor;
+    const desiredGap = Math.min(maxGap, Math.max(minGap, rawGap));
+    // Place hamburger so its right edge sits desiredGap left of logoLeft
+    let candidate = logoLeft - desiredGap - buttonWidth;
+    // Clamp candidate inside bounds
+    if(candidate < BASE_INSET) candidate = BASE_INSET; else if(candidate > MAX_INSET) candidate = MAX_INSET;
+    hamburger.style.left = candidate + 'px';
+
+    // Lightweight runtime diagnostics (only on very narrow widths). Remove once tuned.
+    if(vw <= 425){
+        window.__navDebug = {
+            vw,
+            logoLeft: Math.round(logoLeft),
+            desiredGap: Math.round(desiredGap),
+            buttonWidth,
+            candidate,
+            BASE_INSET,
+            MAX_INSET,
+            gapFactor,
+            minGap,
+            maxGap
+        };
+    }
+    }
+    // Re-run after font load (fonts can shift logo width)
+    if(document.fonts && document.fonts.ready){ document.fonts.ready.then(()=> positionHamburger()); }
+    positionHamburger();
+    window.addEventListener('resize', positionHamburger);
+    window.addEventListener('orientationchange', positionHamburger);
+    window.addEventListener('resize', ()=>{ if(overlay.classList.contains('show')) positionDesktopPopup(); });
+
+
+    // Determine if we should use side-left variant (mobile) so menu sits to left of centered logo.
+    // Use simpler class name for left panel variant
+    // Remove menu-left variant logic (reverting to simple centered popup override CSS handles mobile positioning)
+
+    // ARIA wiring
+    const menuId = menu.id || 'main-nav-panel';
+    hamburger.setAttribute('aria-controls', menuId);
+    hamburger.setAttribute('aria-expanded','false');
+    hamburger.setAttribute('aria-label','Open menu');
+    menu.setAttribute('role','navigation');
+    menu.setAttribute('aria-label','Primary');
+
+    let lastFocus = null;
+    const focusableSel = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+    function openMenu(){
+        lastFocus = document.activeElement;
+        menu.classList.add('show');
+        overlay.classList.add('show');
+        closeBtn && (closeBtn.style.display='block');
+        document.body.classList.add('nav-open');
+        hamburger.setAttribute('aria-expanded','true');
+        hamburger.setAttribute('aria-label','Close menu');
+        // focus first link
+        const first = menu.querySelector(focusableSel);
+    setTimeout(()=>{ first && first.focus(); },30);
+    requestAnimationFrame(positionDesktopPopup);
+    }
+    function closeMenu(){
+        menu.classList.remove('show');
+        overlay.classList.remove('show');
+        closeBtn && (closeBtn.style.display='none');
+        document.body.classList.remove('nav-open');
+        hamburger.setAttribute('aria-expanded','false');
+        hamburger.setAttribute('aria-label','Open menu');
+        menu.classList.remove('popup-tall');
+        menu.style.top='';
+        menu.style.transform='';
+        menu.style.maxHeight='';
+        if(lastFocus && lastFocus.focus) setTimeout(()=>lastFocus.focus(),50);
+    }
+
+    function positionDesktopPopup(){
+        if(!menu.classList.contains('show')) return;
+        if(window.innerWidth <= 640){ // mobile layout
+            menu.classList.remove('popup-tall');
+            menu.style.top='';
+            menu.style.transform='';
+            menu.style.maxHeight='';
+            return;
+        }
+        const header = document.querySelector('header.site-header');
+        const headerH = header ? header.offsetHeight : 80;
+        const gap = 30; // distance below header
+        menu.classList.add('popup-tall');
+        menu.style.top = (headerH + gap) + 'px';
+        menu.style.transform = 'translateX(-50%)';
+        menu.style.maxHeight = `calc(100vh - ${headerH + gap + 40}px)`; // 40 bottom padding
+    }
+
+        hamburger.addEventListener('click', () => {
+        const expanded = hamburger.getAttribute('aria-expanded')==='true';
+        expanded ? closeMenu() : openMenu();
+    });
+        closeBtn && closeBtn.addEventListener('click', closeMenu);
+        overlay.addEventListener('click', closeMenu);
+
+    // Focus trap
+    document.addEventListener('keydown', e => {
+        if(e.key === 'Escape' && overlay.classList.contains('show')){ closeMenu(); }
+        if(e.key === 'Tab' && overlay.classList.contains('show')){
+            const nodes = Array.from(menu.querySelectorAll(focusableSel)).filter(el=>el.offsetParent!==null);
+            if(nodes.length===0) return;
+            const first = nodes[0];
+            const last = nodes[nodes.length-1];
+            if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+            else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+        }
+    });
+
+    // Submenu accordion behavior
+    function setupSubmenus(){
+        const parents = menu.querySelectorAll('.has-sub > a.nav-parent');
+        function closeAll(except){
+            parents.forEach(plink => {
+                const li = plink.parentElement;
+                if(li === except) return;
+                li.classList.remove('open');
+                const wrap = li.querySelector('.sub-menu-wrapper');
+                if(wrap){ wrap.style.maxHeight=null; wrap.setAttribute('aria-hidden','true'); }
+                plink.setAttribute('aria-expanded','false');
+            });
+        }
+        parents.forEach(plink => {
+            plink.setAttribute('aria-expanded','false');
+                // Ensure wrappers start collapsed (CSS sets max-height:0, but inline style guarantees if previously opened)
+                const wrap = plink.parentElement.querySelector('.sub-menu-wrapper');
+                if(wrap){ wrap.style.maxHeight = 0; wrap.setAttribute('aria-hidden','true'); }
+            plink.addEventListener('click', e => {
+                const li = plink.parentElement;
+                const open = li.classList.contains('open');
+                    if(!open){
+                        // First click: open (prevent navigation)
+                        e.preventDefault();
+                        closeAll(li);
+                        li.classList.add('open');
+                        const wrapEl = li.querySelector('.sub-menu-wrapper');
+                        if(wrapEl){
+                            wrapEl.style.maxHeight = wrapEl.scrollHeight + 'px';
+                            wrapEl.setAttribute('aria-hidden','false');
+                        }
+                        plink.setAttribute('aria-expanded','true');
+                    } else {
+                        // Second click: navigate to href (do not preventDefault)
+                        // Collapse will happen naturally when page loads
+                    }
+            });
+        });
+    }
+        setupSubmenus();
+        }
+    })();
 
 // Form validation and feedback
 // Enhanced Booking Form Validation (progressive enhancement)
